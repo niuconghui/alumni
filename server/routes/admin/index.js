@@ -1,5 +1,7 @@
 module.exports = app => {
   const express = require('express')
+  const jwt = require('jsonwebtoken')
+  const AdminUser = require('../../models/AdminUser')
   const router = express.Router({
     mergeParams: true
   })
@@ -29,16 +31,10 @@ module.exports = app => {
     res.send('ok')
   })
 
-  // app.use('/admin/api/rest',router)
-  // 模型名不能是固定的，要是动态传递的，通过路径找模型名，再去数据库中找到模型
-  //    需要通过小写的路径找到大写的模型，需要用到 inflection 模块
-  // 想要各处都用这个中间件，需要把它挂载到 req 对象上
+  const authMiddleware = require('../../middleware/auth')
+  const resourceMiddleware = require('../../middleware/resource')
 
-  app.use('/admin/api/rest/:resource', (req,res,next) => {
-    const modelName = require('inflection').classify(req.params.resource)
-    req.model = require(`../../models/${modelName}`)
-    next()
-  },router)
+  app.use('/admin/api/rest/:resource',authMiddleware(),resourceMiddleware(),router)
 
   const multer = require('multer')
   const upload = multer({dest: __dirname + '/../../uploads'})
@@ -46,5 +42,29 @@ module.exports = app => {
     const file = req.file
     file.url = `http://localhost:3000/uploads/${file.filename}`
     res.send(file)
+  })
+
+  app.post('/admin/api/login', async (req,res) => {
+    const { adminName,password } = req.body
+    const admin = await AdminUser.findOne({ adminName }).select('+password')
+    if (!admin) {
+      return res.status(422).send({ message: '用户不存在'})
+    }
+    // 校检密码
+    const isValid = require('bcrypt').compareSync(password,admin.password)
+    if (!isValid) {
+      return res.status(422).send({ message: '密码错误'})
+    }
+    // 返回 token
+    const token = jwt.sign({ id: admin._id }, app.get('secret'))
+    res.send({ token })
+  })
+
+  
+  // 错误处理函数
+  app.use( async (err,req,res,next) => {
+    res.status(err.statusCode || 500).send({
+      message: err.message
+    })
   })
 }

@@ -2,7 +2,7 @@
   <div id="app" class="wrapper">
     <el-card class="login-card" >
       <el-form>
-        <el-tabs value="second" v-model="activeName"  @tab-click="handleClick">
+        <el-tabs value="first" v-model="activeName" @tab-click="handleClick">
           <el-tab-pane label="账号密码登录" name="first" >
             <el-form-item >
               <el-input placeholder="用户名" v-model="model.adminName"></el-input>
@@ -25,7 +25,7 @@
           </el-tab-pane>
         </el-tabs>
          <el-form-item>
-            <el-button type="primary">登录</el-button>
+            <el-button type="primary" @click="login">登录</el-button>
           </el-form-item>
       </el-form>
     </el-card>
@@ -43,13 +43,22 @@ export default {
   data() {
     return {
       model: {},
-      activeName: 'second',
+      activeName: 'first',
       LoginWay: true,
       phoneNumber: '',
       timeNumber: 0,
     };
   },
   methods: {
+    async login () {
+      const res = await this.$http.post('login',this.model)
+      localStorage.token = res.data.token
+      this.$router.push('/')
+      this.$message({
+        type: 'success',
+        message: '登录成功  '
+      })
+    },
     handleClick(tab, event) {
     },
     getCode () {

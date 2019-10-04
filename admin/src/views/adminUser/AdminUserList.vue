@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>源校友列表</h1>
+    <h1>管理员列表</h1>
     <el-table :data="items">
       <el-table-column
         type="index"
@@ -8,7 +8,9 @@
       </el-table-column>
       <el-table-column prop="_id" label="ID" width="240">
       </el-table-column>
-      <el-table-column prop="studentSID" label="学号" >
+      <el-table-column prop="adminName" label="管理员用户名" >
+      </el-table-column>
+      <el-table-column prop="password" label="管理员密码" >
       </el-table-column>
       <el-table-column label="操作" >
         <template slot-scope="scope">
@@ -24,24 +26,25 @@
 export default {
   data() {
     return {
-      items: []
+      items: [],
+      model: {},
     }
   },
   methods: {
     async fetch () {
-      const res = await this.$http.get('rest/sourceUsers')
+      const res = await this.$http.get('rest/AdminUsers')
       this.items = res.data
     },
     edit (row) {
-      this.$router.push(`/sourceUser/edit/${row._id}`)
+      this.$router.push(`/adminUser/edit/${row._id}`)
     },
     deleted (row) {
-      this.$confirm(`此操作将删除源学号《${row.studentSID}》!`, '提示', {
+      this.$confirm(`此操作将删除管理员《${row.adminName}》!`, '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(async () => {
-          await this.$http.delete(`rest/sourceUsers/${row._id}`)
+          await this.$http.delete(`rest/AdminUsers/${row._id}`)
           this.fetch()
           this.$message({
             type: 'success',

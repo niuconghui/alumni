@@ -2,7 +2,7 @@
   <div>
     <el-container style="height: 100vh">
       <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-        <el-menu  router :default-openeds="['1']">
+        <el-menu  router :default-openeds="['6']">
           <el-submenu index="1">
             <template slot="title"><i class="el-icon-message"></i>校园新闻管理</template>
             <el-menu-item-group>
@@ -52,8 +52,8 @@
             </el-menu-item-group>
             <el-menu-item-group>
               <template slot="title">管理员管理</template>
-              <el-menu-item index="5-1">添加管理员</el-menu-item>
-              <el-menu-item index="6-2">管理员列表</el-menu-item>
+              <el-menu-item index="/adminUser/create">添加管理员</el-menu-item>
+              <el-menu-item index="/adminUser/list">管理员列表</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
         </el-menu>

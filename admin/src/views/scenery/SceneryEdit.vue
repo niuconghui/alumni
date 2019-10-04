@@ -8,7 +8,8 @@
       <el-form-item label="图片：" >
         <el-upload
           class="scenery-uploader"
-          :action="$http.defaults.baseURL +'/upload' "
+          :action="uploadUrl"
+          :headers="getAuthHeaders()"
           :show-file-list="false"
           :on-success="afterApload">
           <img v-if="model.image" :src="model.image" class="scenery">
