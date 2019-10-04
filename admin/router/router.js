@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import Manage from '../src/views/Manage'
+import ManageView from '../src/views/ManageView'
 import Login from '../src/views/Login'
 
 import SceneryEdit from '../src/views/scenery/SceneryEdit'
@@ -25,7 +26,7 @@ const router = new Router({
       name: 'manage',
       component: Manage,
       children: [
-
+        { path: '/',component: ManageView},
         { path: '/news/create',component: NewsEdit },
         { path: '/news/edit/:id',component: NewsEdit,props: true },
         { path: '/news/list',component: NewsList },

@@ -56,7 +56,7 @@ module.exports = app => {
       return res.status(422).send({ message: '密码错误'})
     }
     // 返回 token
-    const token = jwt.sign({ id: admin._id }, app.get('secret'))
+    const token = jwt.sign({ id: admin._id ,adminName: admin.adminName}, app.get('secret'))
     res.send({ token })
   })
 
