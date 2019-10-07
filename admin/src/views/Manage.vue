@@ -61,7 +61,7 @@
       
       <el-container>
         <el-header style="text-align: right; font-size: 12px">
-          <el-button type="danger" @click="logout">注销</el-button>
+          <el-button type="danger" plain @click="logout">注销</el-button>
         </el-header>
         
         <el-main>

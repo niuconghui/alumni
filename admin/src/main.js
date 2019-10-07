@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import App from './App.vue'
-import router from '../router/router'
-import store from '../store/store'
-import element from '../plugins/element-ui'
-import http from '../network/http'
+import router from './router/router'
+import store from './store/store'
+import element from './plugins/element-ui'
+import http from './network/http'
 
 Vue.prototype.$http = http
 
