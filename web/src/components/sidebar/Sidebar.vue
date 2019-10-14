@@ -1,9 +1,9 @@
 <template>
   <el-card class="box-card">
     <div slot="header" class="clearfix">
-      <span>广告位招租</span>
+      <span><slot></slot></span>
     </div>
-</el-card>
+  </el-card>
 </template>
 
 <script>
@@ -32,9 +32,9 @@ export default {
   }
 
   .box-card {
-    width: 18%;
+    width: 250px;
     height: 350px;
-    margin-left: 1.5%;
-    margin-top: 1%;  
+    margin-left: 8%;
+    margin-top: 5%;  
   }
 </style>
