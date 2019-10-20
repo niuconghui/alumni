@@ -8,7 +8,7 @@
               <el-input placeholder="用户名" v-model="model.adminName"></el-input>
             </el-form-item>
             <el-form-item >
-              <el-input placeholder="密码"  v-model="model.password"></el-input>
+              <el-input placeholder="密码" type="password"  v-model="model.password"></el-input>
             </el-form-item>
           </el-tab-pane>
           <el-tab-pane label="短信验证登录" name="second">

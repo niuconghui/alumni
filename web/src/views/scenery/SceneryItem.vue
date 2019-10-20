@@ -1,23 +1,28 @@
 <template>
   <el-card class="box-card" shadow="hover">
-    <div slot="header" class="clearfix">
-      <span>风景标题</span>
-    </div>
-    <div class="demo-image">
-      <div class="block" >
-        <el-image
-          style="width: 300px; height: 150px"
-          :src="url"
-          :fits="fits"></el-image>
+    <div >
+      <div slot="header" class="clearfix">
+        <h3>{{ images.title }}</h3>
       </div>
+      <div class="demo-image">
+        <div class="block" >
+          <el-image
+            style="width: 300px; height: 150px"
+            :src="images.image"
+            :fits="fits"></el-image>
+        </div>
+      </div>
+      <el-divider></el-divider>
+      <span> {{ images.description}} </span>
     </div>
-    <el-divider></el-divider>
-    <span>这里是风景的描述这里是风景的描述这里是风景的描述这里是风景的描述这里是风景的描述这里是风景的描述</span>
   </el-card>
 </template>
 
 <script>
 export default {
+  props: {
+    images: Object,
+  },
   data() {
     return {
         fits: 'contain',

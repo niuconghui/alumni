@@ -1,8 +1,6 @@
 <template>
     <el-card class="box-card mwrapper">
-      <keep-alive>
         <router-view></router-view>
-      </keep-alive>
     </el-card>
 </template>
 
@@ -23,7 +21,7 @@
 <style>
   .mwrapper {
     width: 55%;
-    height: 140vh;
+    height: 100%;
     background-color: #fff;
     margin-left:12.5%;
     margin-top:1%;

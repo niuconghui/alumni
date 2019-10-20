@@ -1,32 +1,33 @@
 <template>
-  <div>
-    <el-container >
-      <el-aside width="150px" >
-        <el-menu :default-openeds="['1']" 
-                 class="el-menu" 
-                 router
-                 >
-            <el-menu-item index="/news/center" class="menu-item">新闻中心</el-menu-item>
-            <el-menu-item index="/news/declear" class="menu-item">公告中心</el-menu-item>
-        </el-menu>
-      </el-aside>
-      
-      <el-container>
-        <el-main>
-          <router-view></router-view>
-        </el-main>
-      </el-container>
-    </el-container>
+  <div >
+    <router-view :newslist="newsList"></router-view>
   </div>
 </template>
 
 <script>
+import http from 'network/axios'
+
+import NewsCenter from './childComps/NewsCenter'
+
 export default {
+  components: {
+    NewsCenter
+  },
   data() {
-      return {
-       
+    return {
+      newsList: []
     }
-  }
+  },
+  methods: {
+    async getNews () {
+      const res = await http.get('news')
+      this.newsList = res.data
+
+    }
+  },
+  created() {
+    this.getNews()
+  },
 }
 </script>
 

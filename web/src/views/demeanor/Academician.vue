@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h4 >新闻资讯</h4>
+    <h4 >院士风采</h4>
     <ul v-for="item in newsList">
       <li>
         <el-link href="https://element.eleme.io" 
@@ -14,7 +14,7 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       newsList: [
         { 
@@ -38,14 +38,10 @@ export default {
       ]
     }
   },
-  methods: {
-
-  }
 }
 </script>
 
 <style scoped>
-
   h4 {
     margin: 0;
     padding: 0;
@@ -67,5 +63,4 @@ export default {
   li:hover {
     border-bottom: 1px dashed #640000
   }
-
 </style>

@@ -1,20 +1,29 @@
 <template>
-  <div>
-    home
+  <div id="home">
+    <carousel></carousel>
+    <div>111</div>
+    <el-card>
+      近期活动
+    </el-card>
   </div>
 </template>
 
 <script>
-export default {
-  data () {
-    return {
+  import Carousel from 'components/carousel/Carousel'
 
-    }
-  },
-  methods: {
-    
-  },
-}
+  export default {
+    components: {
+        Carousel,
+      },
+    data () {
+      return {
+
+      }
+    },
+    methods: {
+      
+    },
+  }
 </script>
 
 <style  scoped>

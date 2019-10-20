@@ -9,6 +9,7 @@ app.set('secret','niuconghui')
 
 require('./plugins/db')(app)     
 require('./routes/admin')(app)
+require('./routes/web')(app)
 
 app.listen(3000, (req,res) => {
   console.log('http://localhost:3000')

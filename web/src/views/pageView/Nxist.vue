@@ -1,8 +1,8 @@
 <template>
-    <div id="app" class="wrapper">
+  <div id="nxist" class="wrapper">
       <nav-header></nav-header>
       <nav-bar></nav-bar>
-      <div class="main">
+        <div class="main">
         <main-view></main-view>
         <div class="sidebar">
           <sidebar>广告位1</sidebar>
@@ -10,11 +10,10 @@
         </div>
       </div>
       <div name="myfooter">
-          <my-footer></my-footer>
+        <my-footer></my-footer>
       </div>
-      <feed-button></feed-button>
-      <el-backtop target=".wrapper" :bottom="70" class="backtop">
-      </el-backtop>
+    <feed-button></feed-button>
+    <el-backtop target=".wrapper" :bottom="70" class="backtop"></el-backtop>
   </div>
 </template>
 
@@ -27,7 +26,7 @@
   import FeedButton from 'components/feedback/FeedButton'
 
   export default {
-    name: 'App',
+    name: 'Nxist',
     components: {
       NavHeader,
       NavBar,
@@ -40,7 +39,8 @@
 </script>
 
 
-<style  scoped>
+<style>
+ 
   .wrapper {
     height: 100vh;
     overflow: hidden;

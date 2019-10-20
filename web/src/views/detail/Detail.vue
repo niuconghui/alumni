@@ -1,22 +1,25 @@
 <template>
   <div>
-    changexxxxxxxxxxxxxx
+    新闻
   </div>
 </template>
 
 <script>
 export default {
-  data () {
-    return {
+  props: {
 
-    }
   },
-  methods: {
-    
+  components: {
+
+  },
+  data() {
+    return {
+      
+    }
   },
 }
 </script>
 
-<style  scoped>
+<style scoped>
 
 </style>

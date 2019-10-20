@@ -1,7 +1,9 @@
 <template>
   <div class="feedback">
     <el-link href="/feedback" :underline="false" target="_blank" >
-      <el-button icon="el-icon-s-comment" circle class="feedbotton" ></el-button>
+      <el-tooltip class="item" effect="light" content="建议反馈" placement="bottom-start">
+        <el-button icon="el-icon-s-comment" circle class="feedbotton" ></el-button>
+      </el-tooltip>
     </el-link>
     
   </div>
@@ -27,14 +29,14 @@ export default {
 <style scoped>
    .feedback {
     position: absolute ;
-    left: 94%;
+    left: 94.2%;
     top: 90%;
     padding: 0!important;
     margin: 0!important;
   }
   .feedbotton {
-    width: 100%!important;
-    height: 100%!important;
+    width: 40px!important;
+    height: 40px!important;
     color: #640000!important;
     font-size: 16px!important;
     background-color: #fff!important;
