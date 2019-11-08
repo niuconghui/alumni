@@ -1,11 +1,20 @@
 <template>
   <div id="app" class="wrapper">
     <div class="nxist"><img src="~assets/images/nxist.png" alt=""></div>
-    <el-card class="login-card">
+    <el-card class="register-card">
       <h3>注册</h3>
       <el-form >
-        <el-form-item label="用户名">
-          <el-input></el-input>
+        <el-form-item >
+          <el-input placeholder="用户名"></el-input>
+        </el-form-item>
+        <el-form-item >
+          <el-input show-password placeholder="密码"></el-input>
+        </el-form-item>
+         <el-form-item >
+          <el-input placeholder="学号"></el-input>
+        </el-form-item>
+         <el-form-item >
+          <el-input placeholder="手机号"></el-input>
         </el-form-item>
         <el-form-item class="item">
           <el-button type="primary" class="login-button">注册</el-button>
@@ -62,7 +71,7 @@
     top: 50px;
     left: 5%;
   }
-  .login-card {
+  .register-card {
     width: 23rem;
     margin: 5rem auto;
   }
@@ -90,9 +99,11 @@
     border: 1px solid #DCDCDC!important;
   }
   .el-input__inner:hover {
-    border: 1px solid #EA6F5A!important;
+    /* border: 1px solid #EA6F5A!important; */
   }
-
+  .el-input__inner.active {
+    border: #640000!important
+  }
 
   .button {
     color: #EA6F5A!important;

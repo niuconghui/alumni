@@ -5,17 +5,7 @@
       <el-container>
         
         <el-main >
-          <span>六月</span>
-          <el-divider></el-divider>
-          <span>曾以为毕业是一个结束  </span>
-          <el-divider></el-divider>
-          <span>其实也是一个开始</span>
-          <el-divider></el-divider>
-          <span>愿以梦为马，不负韶华</span>
-          <el-divider></el-divider>
-          <span>莫愁前路无知己</span>
-          <el-divider></el-divider>
-          <span>天下谁人不识君</span>
+          <span>欢迎登陆后台管理系统</span>
         </el-main>
       </el-container>
     </el-container>

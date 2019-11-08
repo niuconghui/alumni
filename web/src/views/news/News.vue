@@ -1,6 +1,6 @@
 <template>
   <div >
-    <router-view :newslist="newsList"></router-view>
+    <router-view :newslist="centerNewsList" :declearlist="declearNewsList"></router-view>
   </div>
 </template>
 
@@ -11,22 +11,28 @@ import NewsCenter from './childComps/NewsCenter'
 
 export default {
   components: {
-    NewsCenter
+    
   },
   data() {
     return {
-      newsList: []
+      centerNewsList: [],
+      declearNewsList: []
     }
   },
   methods: {
-    async getNews () {
-      const res = await http.get('news')
-      this.newsList = res.data
-
+    async getNewsCenter () {
+      const res = await http.get('news/center')
+      this.centerNewsList = res.data
+    },
+    async getNewsDeclear () {
+      const res = await http.get('news/declear')
+      this.declearNewsList = res.data
+      console.log(this.declearNewsList)
     }
   },
   created() {
-    this.getNews()
+    this.getNewsCenter()
+    this.getNewsDeclear()
   },
 }
 </script>

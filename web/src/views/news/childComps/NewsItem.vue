@@ -2,7 +2,6 @@
   <div>
     <ul>
       <li>
-        {{ news._id }}
         <el-link
           @click="toDetail"
           target="_blank" :underline="false" 
@@ -10,7 +9,7 @@
           :newsid="news._id"
           >
           {{ news.title }}
-          题目
+
         </el-link>
       </li>
     </ul>
@@ -18,6 +17,10 @@
 </template>
 
 <script>
+
+import NewsItem from './NewsItem'
+import NewsDetail from './NewsDetail'
+
 export default {
   props: {
     news: Object

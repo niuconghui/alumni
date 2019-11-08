@@ -93,7 +93,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   body {
     background-color: #F4F5F5;
   }

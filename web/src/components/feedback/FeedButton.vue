@@ -28,7 +28,7 @@ export default {
 
 <style scoped>
    .feedback {
-    position: absolute ;
+    position: fixed ;
     left: 94.2%;
     top: 90%;
     padding: 0!important;

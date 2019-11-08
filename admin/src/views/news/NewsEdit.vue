@@ -8,6 +8,16 @@
       <el-form-item label="作者：" >
         <el-input v-model="model.author"></el-input>
       </el-form-item>
+      <el-form-item label="分类：" >
+        <el-select v-model="model.tag" placeholder="请选择">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.lable"
+            :value="item.value">
+          </el-option>
+        </el-select>
+      </el-form-item>
       <el-form-item label="新闻内容：">
         <vue-editor v-model="model.content"
         useCustomImageHandler @image-added="handleImageAdded"></vue-editor>
@@ -17,6 +27,8 @@
           <el-date-picker
             v-model="model.issueTime"
             type="datetime"
+            format="yyyy 年 MM 月 dd 日"
+            value-format="yyyy-MM-dd"
             placeholder="选择日期时间">
           </el-date-picker>
         </div>
@@ -38,6 +50,13 @@
     props: {id: {}},
     data() {
       return {
+        options: [{
+          value: '新闻',
+          label: '新闻'
+        },{
+          value: '公告',
+          label: '公告'
+        }],
         model: {},
       }
     },

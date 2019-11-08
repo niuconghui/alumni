@@ -12,6 +12,8 @@
       </el-table-column>
       <el-table-column prop="author" label="作者" >
       </el-table-column>
+      <el-table-column prop="tag" label="类型" >
+      </el-table-column>
       <el-table-column prop="issueTime" label="发表时间" >
       </el-table-column>
       <el-table-column label="操作"  width="120">

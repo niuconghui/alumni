@@ -1,7 +1,9 @@
 <template>
   <div id="nxist" class="wrapper">
-      <nav-header></nav-header>
-      <nav-bar></nav-bar>
+      <div class="header">
+        <nav-header></nav-header>
+        <nav-bar></nav-bar>
+      </div>
         <div class="main">
         <main-view></main-view>
         <div class="sidebar">
@@ -40,11 +42,15 @@
 
 
 <style>
+  .header {
+    /* position:relative; */
+  }
  
   .wrapper {
     height: 100vh;
     overflow: hidden;
     overflow-y: scroll;
+    position: relative;
   }
  
   .backtop {
