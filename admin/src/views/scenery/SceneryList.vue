@@ -1,29 +1,58 @@
 <template>
   <div>
-    <h1>校园风光列表</h1>
-    <el-table :data="items">
-      <el-table-column
-        type="index"
-        width="50">
-      </el-table-column>
-      <el-table-column prop="_id" label="ID" width="180">
-      </el-table-column>
-      <el-table-column prop="title" label="标题" width="180" >
-      </el-table-column>
-      <el-table-column prop="image" label="图片" >
-        <template slot-scope="scope">
-          <img :src="scope.row.image" alt=""  width="280px" height="150px">
-        </template>
-      </el-table-column>
-      <el-table-column prop="description" label="描述" >
-      </el-table-column>
-      <el-table-column label="操作"  width="120">
-        <template slot-scope="scope">
-          <el-button @click="edit(scope.row)" type="text" size="small">编辑</el-button>
-          <el-button @click="deleted(scope.row)" type="text" size="small">删除</el-button>
-        </template>
-      </el-table-column>
-  </el-table>
+    <el-card class="box-card">
+      <el-breadcrumb  separator-class="el-icon-arrow-right" separator="/">
+        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/sceneries/list' }">校园风光管理</el-breadcrumb-item>
+      </el-breadcrumb>
+      
+    
+      <el-row :gutter="10">
+        <el-col :span="6">
+          <el-input  placeholder="请输入内容" v-model="queryKey" clearable @clear="fetch">
+            <el-button slot="append" type="primary" icon="el-icon-search" @click="fetch"></el-button>
+          </el-input>
+        </el-col>
+      </el-row>
+
+      <el-table :data="items"  style="width: 100%">
+        <el-table-column
+          type="index"
+          width="50">
+        </el-table-column>
+        <el-table-column prop="_id" label="ID" width="180">
+        </el-table-column>
+        <el-table-column prop="title" label="标题" width="180" >
+        </el-table-column>
+        <el-table-column prop="image" label="封面" >
+          <template slot-scope="scope">
+            <img :src="scope.row.coverSrc" alt=""  width="280px" height="150px">
+          </template>
+        </el-table-column>
+        <el-table-column prop="description" label="描述" >
+        </el-table-column>
+        <el-table-column label="操作"  width="200" fixed="right" >
+          <template slot-scope="scope">
+            <el-button @click="edit(scope.row)" type="text" size="small">编辑</el-button>
+            <el-button @click="deleted(scope.row)" type="text" size="small">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+
+      <el-pagination
+        background
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="currentPage"
+        layout="total, sizes, prev, pager, next "
+        :page-sizes="[1, 2, 3]"
+        :page-size=pageLimit
+        :total=total
+        hide-on-single-page>
+      </el-pagination>
+    </el-card>
+
+  
   </div>
 </template>
 
@@ -31,13 +60,32 @@
 export default {
   data() {
     return {
-      items: []
+      items: [],
+      total: 0,
+      currentPage: 1,
+      pageLimit: 3,
+      queryKey: ''
     }
   },
   methods: {
+    handleSizeChange(val) {  // 切换一页显示几条数据
+      this.pageLimit = val
+      this.fetch()
+    },
+    handleCurrentChange(val) { // 根据页码请求数据
+      this.currentPage = val
+      this.fetch()
+    },
     async fetch () {
-      const res = await this.$http.get('rest/sceneries')
-      this.items = res.data
+      const res = await this.$http.get('rest/sceneries', {
+          params: {
+            page: this.currentPage,
+            limit: this.pageLimit,
+            queryKey: this.queryKey
+          }
+        })
+      this.items = res.data.items
+      this.total = res.data.total
     },
     edit (row) {
       this.$router.push(`/sceneries/edit/${row._id}`)
@@ -64,5 +112,11 @@ export default {
 </script>
 
 <style scoped>
+  .box-card {
+    height: 100%;
+  }
 
+  .el-pagination {
+    margin-top: 3vh  ; 
+  }
 </style>

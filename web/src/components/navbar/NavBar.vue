@@ -1,134 +1,192 @@
 <template>
-  <div class="nav-wrapper">
-      <el-menu router :default-active="$route.path"  
-                      class="el-menu-demo" 
-                      mode="horizontal" 
-                      active-text-color="#640000"
-                      @select="handleSelect">
-        <el-menu-item index="" style="cursor:default">
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        </el-menu-item>
-        <el-menu-item index="/home">首页</el-menu-item>
-        <el-submenu index="/news" active-text-color="#640000" >
-          <template slot="title">新闻中心</template>
-          <el-menu-item index="/news/center">热点新闻</el-menu-item>
-          <el-menu-item index="/news/declear">公告中心</el-menu-item>
-        </el-submenu>
-        <el-menu-item index="/exchange">校园交流</el-menu-item>
-        <el-menu-item index="/demeanor/alumni">校友风采</el-menu-item>
-        <el-menu-item index="/scenery" >校园风光</el-menu-item>
-        <el-menu-item index="/donate">校友捐赠</el-menu-item>
-        <el-menu-item index="" style="cursor:default">
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        </el-menu-item>
-        <el-menu-item v-if="true" index="" style="cursor:default">
-          <el-link type="primary" class="link" :underline="false" @click="login">登录</el-link>
-          <el-divider direction="vertical"></el-divider>
-          <el-link class="link" :underline="false" @click="register" >注册</el-link>
-        </el-menu-item>
-        <el-menu-item v-else>
-          <el-col :span="12" >
-            <span class="demonstration"></span>
-            <el-dropdown trigger="click">
-              <span class="el-dropdown-link">
-                <el-avatar>
-                  <img src="../../assets/images/logo.png" alt="" @click="center">
-                </el-avatar>
-              </span>
-              <el-dropdown-menu slot="dropdown" >
-                <el-dropdown-item icon="el-icon-edit" class="dropdown">写交流</el-dropdown-item>
-                <el-dropdown-item icon="el-icon-user-solid" divided class="dropdown">我的主页</el-dropdown-item>
-                <el-dropdown-item icon="el-icon-star-on" class="dropdown">我赞过的</el-dropdown-item>
-                <el-dropdown-item icon="el-icon-setting" divided class="dropdown">设置</el-dropdown-item>
-                <el-dropdown-item icon="el-icon-warning" class="dropdown">关于</el-dropdown-item>
-                <el-dropdown-item icon="el-icon-d-arrow-right" divided class="dropdown">登出</el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-          </el-col>
-        </el-menu-item>
-      </el-menu>
-    </div>
-  </div>
+  <div class="header">
+    <ul class="header-ul">
+      <li><router-link to="/news">新闻中心</router-link></li>
+      <li><router-link to="/exchange">校友交流</router-link></li>
+      <li><router-link to="/class">关注班级</router-link></li>
+      <li><router-link to="/demeanor">校友风采</router-link></li>
+      <li><router-link to="/scenery">校园风光</router-link></li>
+      <li class="avatar"  v-if="isLogin">
+        <div class="drop">
+          <div>
+            <img :src=showAvatar alt="">
+          </div>
+          <div class="drop-menu">
+            <div 
+              class="drop-menu-item" 
+              v-for="item in dropOptions"
+              @click="dropClick(item.path)">
+              <i :class="item.icon"></i> {{item.text}}
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="avatar" v-else>
+        <router-link to="/login" class="login">登录</router-link>
+        <el-divider direction="vertical"></el-divider>
+        <router-link to="/register" class="login">注册</router-link>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
-  import 'assets/scss/style.scss'
-  import Register from 'views/userCenter/Register'
-  export default {
-    data() {
-        return {
-          activeIndex: '1',
-          isShowActive: true,
-          isShow: true,
-          isShowRegister: false,
-        };
-      },
-      components: {
-        Register
-      },
-      methods: {
-        login () {
-          this.$router.push('/login')
-        },
-        register () {
-          this.$router.push('/register')
-          // this.isShowRegister = !this.isShowRegister
-        },
-        center () {
-          this.isShow = !this.isShow
-          console.log('个人中心')
-        },
-        handleSelect(key, keyPath) {
+  import { mapGetters, mapActions } from 'vuex'
+
+  export default {
+    name: 'NavBar',
+    data() {
+      return {
+        dropOptions: [
+          { text: '写交流', icon: 'el-icon-edit', path: '/exchange/new' },
+          { text: '我的主页', icon: 'el-icon-user-solid', path: '/save' },
+          { text: '设置', icon: 'el-icon-setting', path: '/save' },
+          { text: '关于', icon: 'el-icon-warning', path: '/save' },
+          { text: '登出', icon: 'el-icon-d-arrow-right', path: '/logout' },
+        ]
+      }
+    },
+    computed: {
+      ...mapGetters(["isLogin"]),
+      showAvatar() {
+        return this.$store.state.userAvatar
+      }
+    },
+
+    methods: {
+      dropClick(path) {
+        if (path === '/logout') {
+          this.$confirm('确认登出吗?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            if (localStorage.token) {
+              localStorage.clear()
+              this.$store.state.userAvatar = ''
+              this.$store.state.isLogin = false
+              this.$router.push('/')
+            }
+            this.$message({
+              type: 'success',
+              message: '注销成功!'
+            });
+          })
+        } else {
+          console.log(path)
+          this.$router.push(path)
         }
-      },
-  }
+        
+      }
+    },
+  }
 </script>
 
-<style >
-  .nav-wrapper {
-    position: sticky;
-    margin: auto;
+<style lang="scss" scoped>
+  .header {
+    width: 100%;
+    height: 4vw;
+    background-color: #fff;
+    font-size: 1.0rem;
+    line-height: 4vw;
+    box-shadow: 0 2px 3px hsla(0,0%,7%,.1);
+    .header-ul {
+      display: flex;
+      width: 70vw;
+      margin: 0 auto;
+      padding: 0;
+      li {
+        width: 7vw;
+        height: 4vw;
+        list-style: none;
+        text-align: left;
+        line-height: 4vw;
+      }
+
+      .avatar{
+        flex: 1;
+        position: relative;
+        text-align: right;
+        .drop {
+          position: absolute;
+          right: 0;
+          width: 3vw;
+          height: 4vw;
+          cursor: pointer;
+          img {
+            width: 3vw;
+            height: 3vw;
+            margin: 0.7vw 0 0vw 0;
+            border-radius: 50%;
+          }
+
+          .drop-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 4vw;
+            padding: 1vw 0 1vw 0 ;
+            min-width: 9vw;
+            min-height: 14vw;
+            background-color: $white;
+            border: 2px solid $gray-1;
+            border-radius: 2px;
+
+            .drop-menu-item {
+              margin: .2vw 0 0 0;
+              padding: 0 0 0 1vw;
+              width: 100%;
+              height: 2.5vw;
+              line-height: 2.5vw;
+              text-align: left;
+              background-color: #fff;
+              
+            }
+            .drop-menu-item:hover {
+              background-color: $blue-light;
+              color: $primary;
+            }
+          }
+        }
+
+        .drop:hover {
+          .drop-menu {
+            display: block;
+          }
+        }
+      }
+
+      a {
+        display: inline-block;
+        margin: 0;
+        padding: 0;
+        width: 7vw;
+        height: 100%;
+      }
+
+      .login {
+        width: 3vw;
+        text-align: center;
+      }
+    }
+
+   
   }
-  .el-menu--horizontal {
-    margin: auto!important;
-  }
-  .el-submenu__title {
-    font-size: 16px!important;
-    color: #333!important;
-    margin: auto!important;
-  }
-  .el-icon-arrow-down:before {
-    display: none!important;
-  }
-  .el-menu-item {
-    font-size: 16px!important;
-    color: #333!important;
-    margin: auto!important;
-  }
-  .el-menu-item:hover {
-    color: #640000!important;
-  }
-  .link {
-    font-size: 16px!important;
-    color:#640000!important;
-  }
-  .divider {
-    margin: 0!important;
-  }
-  .dropdown:hover {
-    background-color: #f4f4f4!important;
-    color: #640000!important;
+  a {
+    display: inline;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    color: #909090;
   }
 
-  .test{
-    width: 100px;
-    height: 100px;
-    background-color: pink;
+  a:hover {
+    color: $primary;
   }
+
+  .router-link-active {
+    color: $primary;
+  }
+
+ 
 </style>

@@ -3,13 +3,12 @@
     <ul>
       <li>
         <el-link
-          @click="toDetail"
+          @click="newsClick(news._id)"
           target="_blank" :underline="false" 
           class="newsList"
           :newsid="news._id"
           >
           {{ news.title }}
-
         </el-link>
       </li>
     </ul>
@@ -31,15 +30,16 @@ export default {
     }
   },
   methods: {
-    toDetail () {
-      this.$router.push(`/news/${this.news._id}`)
+    newsClick(id) {
+      console.log(id)
+      this.$emit('newsClick', id)
     }
   }
 }
 </script>
 
 
-<style scoped>
+<style lang="scss" scoped>
 
 h4 {
     margin: 0;
@@ -49,18 +49,15 @@ h4 {
     border-bottom: 1px solid #DCDCDC;
   }
   
-  .newsList {
-    height: 20px;
-  }
-  .newsList:hover {
-    color: #640000!important;
-  }
 
   li {
     list-style-type: square ;
+    height: 1.3rem;
   }
+
   li:hover {
-    border-bottom: 1px dashed #640000
+    color: $primary;
+    border-bottom: 1px dashed $primary
   }
 
 </style>

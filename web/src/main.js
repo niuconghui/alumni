@@ -2,15 +2,22 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router/index'
 import store from './store/store'
-import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
+
+// 全局网络请求
+import api from './api'
+Vue.prototype.$api = api
+
+// 引入 elementui
+import '@/plugins/elementUi'
+
+// 全局重置样式文件
+import 'assets/scss/base.css'
 
 import echarts from 'echarts'
 Vue.prototype.$echarts = echarts
 
 
 Vue.config.productionTip = false
-Vue.use(ElementUI)
 
 new Vue({
   router,

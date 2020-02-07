@@ -1,9 +1,7 @@
 <template>
   <div>
-    <el-container style="height: 100vh">
-      
+    <el-container>
       <el-container>
-        
         <el-main >
           <span>欢迎登陆后台管理系统</span>
         </el-main>

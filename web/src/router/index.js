@@ -1,70 +1,106 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import Nxist from '../views/pageView/Nxist'
-import Detail from 'views/detail/Detail'
+const MainView = () => import("views/mainView/MainView")
 
-import Home from 'views/home/Home'
+const News = () => import('views/news/News')
+const NewsCenter = () => import('views/news/childComps/NewsCenter')
+const NewsDeclear = () => import('views/news/childComps/NewsDeclear')
+const NewsDetail = () => import('views/news/childComps/NewsDetail')
 
-import News from '../views/news/News'
-import NewsCenter from '../views/news/childComps/NewsCenter'
-import NewsDeclear from '../views/news/childComps/NewsDeclear'
-import NewsDetail from 'views/news/childComps/NewsDetail'
+const Exchange = () => import('views/exchange/Exchange')
+const ExchangeDetail = () => import('views/exchange/ExchangeDetail')
+const Draft = () => import('views/exchange/Draft')
 
-import Exchange from 'views/exchange/Exchange'
+const Demeanor = () => import('views/demeanor/Demeanor')
+const Academician = () => import('views/demeanor/childComps/Academician')
+const Alumni = () => import('views/demeanor/childComps/Alumni')
+const DemeanorDetail = () => import('views/demeanor/DemeanorDetail')
 
-import Demeanor from 'views/demeanor/Demeanor'
-import Academician from 'views/demeanor/Academician'
-import Alumni from 'views/demeanor/Alumni'
+const Scenery = () => import('views/scenery/Scenery')
 
-import Scenery from '../views/scenery/Scenery'
+const Register = () => import('views/userCenter/Register')
+const Login = () => import('views/userCenter/Login')
 
-import Donate from '../views/donate/Donate'
+const FeedBack = () => import('views/feedback/FeedBack')
 
-import Register from '../views/userCenter/Register'
-import Login from '../views/userCenter/Login'
-
-import FeedBack from 'views/feedback/FeedBack'
+const NotFound = () => import('views/notFound/NotFound')
 
 Vue.use(Router)
 
-const routes = new Router({
+const router = new Router({
   mode: 'history',
-  //base: process.env.BASE_URL,
+  base: process.env.BASE_URL,
   routes: [
-    { path: '', redirect: '/home'},
-    { 
-      path: '/',
-      component: Nxist,
+    { path: '/', redirect: '/news/newsCenter' },
+    { path: '/news', redirect: '/news/newsCenter' },
+    { path: '/demeanor', redirect: '/demeanor/academician'},
+    
+    { path: '/', 
+      component: MainView,
       children: [
-        { path: 'home', component: Home},
-
-        { path: 'news',
+        { 
+          path: '/news', 
           component: News,
           children: [
-            { path: 'center', component: NewsCenter},
-            { path: 'declear', component: NewsDeclear},
+            { path: 'newsCenter', component: NewsCenter },
+            { path: 'newsDeclear', component: NewsDeclear },
+            { path: 'detail/:id', component: NewsDetail, props: true }
           ]
         },
-        { path: 'news/:id',component: NewsDetail,props: true },
 
-        { path: 'exchange', component: Exchange},
-        { path: 'demeanor', 
+        { path: '/exchange',
+          component: Exchange,
+        },
+
+        { path: '/demeanor',
           component: Demeanor,
           children: [
-            { path: 'academician', component: Academician},
-            { path: 'alumni', component: Alumni},
+            { path: 'academician', component: Academician },
+            { path: 'alumni', component: Alumni },
+            { path: 'detail/:id', component: DemeanorDetail, props: true }
           ]
         },
-        { path: 'scenery', component: Scenery },
-        { path: 'donate', component: Donate },
+        { path: '/scenery',
+          component: Scenery
+        },
+
+        
       ]
     },
+    { path: '/exchange/detail/:id',component: ExchangeDetail, props: true },
+    { 
+      path: '/exchange/new', 
+      component: Draft, 
+      props: true,
+      meta: { requiresAuth: true }
+    },
+
     { path: '/register',component: Register },
     { path: '/login',component: Login },
     { path: '/feedback', component: FeedBack},
 
+    { path: '/404', component: NotFound },
+    // { path: '*', redirect: '/404' }
   ]
 })
 
-export default routes
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if(!localStorage.token) {
+      Vue.prototype.$message({
+        type: 'error',
+        message: '您还未登陆，请先登录！'
+      })
+      console.log(to.fullPath)
+      next({ path: '/login', query: { redirect: to.fullPath } })
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
+  
+})
+
+export default router

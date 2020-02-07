@@ -1,32 +1,38 @@
 <template>
   <div>
     <el-card class="back-card" shadow="never" >
-      <el-form label-width="90px">
+      <el-form label-width="100px" :model="model" :rules="rules" ref="feedbackForm">
         <h3>反馈意见</h3>
-        <el-form-item label="反馈类型：">
-          <el-select v-model="value" placeholder="请选择">
+        <el-form-item label="反馈类型：" prop="category">
+          <el-select v-model="model.category" placeholder="请选择">
             <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
+              v-for="item in categories"
+              :key="item._id"
+              :label="item.title"
+              :value="item._id"
+              >
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="问题描述：">
-          <el-input></el-input>
+        <el-form-item label="问题描述：" prop="problemDesc">
+          <el-input  
+            type="textarea"
+            :rows="2"
+            placeholder="请输入问题详情"
+            v-model="model.problemDesc">
+          </el-input>
         </el-form-item>
-        <el-form-item label="qq：">
-          <el-input></el-input>
+        <el-form-item label="qq：" prop="qq">
+          <el-input v-model="model.qq"></el-input>
         </el-form-item>
-        <el-form-item label="微信：">
-          <el-input></el-input>
+        <el-form-item label="微信：" prop="weChat">
+          <el-input v-model="model.weChat"></el-input>
         </el-form-item>
-        <el-form-item label="邮箱：">
-          <el-input></el-input>
+        <el-form-item label="邮箱：" prop="email">
+          <el-input v-model="model.email"></el-input>
         </el-form-item>
         <el-form-item >
-          <button @click.prevent="submit">提交反馈</button>
+          <el-button type="primary" @click="submit('feedbackForm')">提交反馈</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -37,28 +43,56 @@
   export default {
     data() {
       return {
-        options: [{
-          value: '选项1',
-          label: '登录注册'
-        }, {
-          value: '选项2',
-          label: '个人中心'
-        }, {
-          value: '选项3',
-          label: '交流问题'
-        }, {
-          value: '选项4',
-          label: '捐赠问题'
-        }, {
-          value: '选项5',
-          label: '意见建议或其他'
-        }],
-        value: ''
+        model: {},
+        categories: [],
+        rules: {
+          category: [
+            { required: true, message: '反馈类型必须选择', trigger: 'change' }
+          ],
+          problemDesc: [
+            { required: true, message: '请填写问题描述', trigger: 'blur' }
+          ],
+          qq: [
+            { required: true, message: '请填写qq', trigger: 'blur' }
+          ],
+          weChat: [
+            { required: true, message: '请填写微信', trigger: 'blur' }
+          ],
+          email: [
+            { type: 'email', required: true, message: '请填写正确的邮箱', trigger: 'blur' }
+          ],
+        }  
       }
     },
+    created() {
+      this._getCategory()
+    },
     methods: {
-      submit () {
-        console.log(111);
+      async _getCategory() {
+        const res = await this.$api.feedback.getCategory()
+        console.log(res)
+        if (res.data.code !== 0) return
+        this.categories = res.data.data
+      },
+
+      async submit (feedbackForm) {
+        this.$refs.feedbackForm.validate(async (valid) => {
+          if (valid) {
+            const res = await this.$api.feedback.postFeedback(this.model)
+            if (res.data.code === 0) {
+              this.$message({
+                type: 'success',
+                message: '您的反馈已经成功提交，感谢您的意见！您可以继续反馈！'
+              })
+              this.model = {}
+            }
+          } else {
+            this.$alert('请按规则填写信息！', {
+              confirmButtonText: '确定'
+            })
+            return false;
+          }
+        })
       }
     }
   }
@@ -68,43 +102,11 @@
   p {
     font-size: 20px;
   }
-  span {
-    color: #640000!important;
-  }
+
   .back-card {
     width: 40rem;
-    margin: 5rem auto;
+    margin: 4rem auto;
   }
 
-  .el-input__inner {
-    border: 1px solid #DCDCDC!important;
-  }
-  .el-input__inner:hover {
-    border: 1px solid #EA6F5A!important;
-  }
-  /* .textarea {
-    border: 1px solid #DCDCDC!important;
-    border-radius: 5px; 
-  }
-  .textarea:hover {
-    border: 1px solid #EA6F5A!important;
-  } */
 
-  button {
-    color: #ffffff!important;
-    width: 80px;
-    height: 40px;
-    border: 1px solid #EA6F5A;
-    background-color: #EA6F5A;
-    border-radius: 10%;
-    cursor: pointer;
-  }
-
-  .el-select-dropdown__item:hover {
-    background-color: #FFEBCD!important;
-  }
-  .el-select-dropdown__item.selected {
-    color: #640000!important;
-    background-color: #FFEBCD!important;
-  }
 </style>

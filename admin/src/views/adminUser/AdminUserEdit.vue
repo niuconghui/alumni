@@ -1,17 +1,19 @@
 <template>
   <div>
-    <h1>{{this.id ? '修改' : '添加'}}管理员</h1>
-    <el-form label-width="120px">
-      <el-form-item label="管理员姓名：" >
-        <el-input v-model="model.adminName"></el-input>
-      </el-form-item>
-      <el-form-item label="管理员密码：" >
-        <el-input v-model="model.password"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="save">保存</el-button>
-      </el-form-item>
-    </el-form>
+    <el-card>
+      <h1>{{this.id ? '修改' : '添加'}}管理员</h1>
+      <el-form label-width="120px">
+        <el-form-item label="管理员姓名：" >
+          <el-input v-model="model.adminName"></el-input>
+        </el-form-item>
+        <el-form-item label="管理员密码：" >
+          <el-input v-model="model.password"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="save">保存</el-button>
+        </el-form-item>
+      </el-form>
+    </el-card>
   </div>
 </template>
 

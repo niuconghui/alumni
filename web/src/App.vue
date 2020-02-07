@@ -1,11 +1,32 @@
 <template>
- <router-view></router-view>
+  <div id="app">
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
-  
+  import { mapActions } from 'vuex'
   export default {
-    name: 'App'
+    name: 'App',
+    created() {
+      this._getUser()
+    },
+    methods: {
+      ...mapActions(["setLogin", "setAvatar", "setUserId"]),
+
+      async _getUser() {
+        if (localStorage.getItem('token')) {
+          const res = await this.$api.user.getUser()
+          this.setLogin(true)
+          this.setUserId(res.data.data.user._id)
+          this.setAvatar(res.data.data.user.avatar)
+        } else {
+          console.log('未获取到 token');
+          this.setToken('')
+          this.setAvatar('')
+        }
+      }
+    },
   }
 </script>
 

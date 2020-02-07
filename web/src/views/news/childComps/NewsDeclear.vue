@@ -1,32 +1,83 @@
 <template>
   <div>
-    <div>
-      <h4 >公告中心</h4>
-      <news-item v-for="(item,index) in declearlist" :key="index" :news="item"></news-item>
+    <h4 >公告中心</h4>
+    <div class="news-list"> 
+      <news-item 
+      v-for="(item,index) in declearList" 
+      :key="index" 
+      :news="item"
+      @newsClick="newsItemClick" />
     </div>
+
+    <el-pagination
+      background
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="page"
+      layout="total, sizes, prev, pager, next "
+      :page-sizes="[10, 15]"
+      :page-size="limit"
+      :total="total"
+    />
   </div>
 </template>
 
 <script>
-import http from 'network/axios'
-
 import NewsItem from './NewsItem'
 import NewsDetail from './NewsDetail'
 
 export default {
-  props: {
-    declearlist: Array
-  },
   components: {
     NewsItem,
     NewsDetail
+  },
+  data() {
+    return {
+      declearList: [],
+      total: 0,
+      page: 1,
+      limit: 10
+    }
+  },
 
+  created() {
+    this._getNewsCenter()
+  },
+  methods: {
+    // ----------------------------------网络请求---------------------------------------
+    async _getNewsCenter() {
+      const res = await this.$api.news.getNewsDeclear(this.page, this.limit)
+      if (res.data.code === 0) {
+        this.declearList = res.data.data.items
+        this.total = res.data.data.total
+      }
+    },
+
+    // -----------------------------------事件监听-------------------------------------
+    newsItemClick(id) {
+      this.$router.push(`/news/detail/${id}`)
+    },
+
+    handleSizeChange(val) {
+      // 切换一页显示几条数据
+      this.limit = val;
+      this._getNewsCenter();
+    },
+    handleCurrentChange(val) {
+      // 根据页码请求数据
+      this.page = val;
+      this._getNewsCenter();
+    }
   },
 }
 </script>
 
 
 <style scoped>
+.news-list {
+  min-height: 350px;
+}
+
 h4 {
     margin: 0;
     padding: 0;
@@ -35,18 +86,4 @@ h4 {
     border-bottom: 1px solid #DCDCDC;
   }
   
-  .newsList {
-    height: 20px;
-  }
-  .newsList:hover {
-    color: #640000!important;
-  }
-
-  li {
-    list-style-type: square ;
-  }
-  li:hover {
-    border-bottom: 1px dashed #640000
-  }
-
 </style>

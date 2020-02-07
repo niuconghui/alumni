@@ -1,27 +1,26 @@
 <template>
   <div>
     <el-carousel height="400px">
-      <el-carousel-item v-for="item in 4" :key="item">
-        <h3 class="small">{{ item }}</h3>
+      <el-carousel-item v-for="(item, index) in carousels" :key="index">
+        <el-image :src="item.coverSrc"></el-image>
       </el-carousel-item>
     </el-carousel>
   </div>
 </template>
 
-<style scoped>
-  .el-carousel__item h3 {
-    color: #475669;
-    font-size: 14px;
-    opacity: 0.75;
-    line-height: 150px;
-    margin: 0;
+<script>
+  export default {
+    props: {
+      carousels: { type: Array }
+    },
+    data() {
+      return {
+        
+      }
+    },
   }
+</script>
 
-  .el-carousel__item:nth-child(2n) {
-     background:url('../../assets/images/sc1.jpeg')
-  }
-  
-  .el-carousel__item:nth-child(2n+1) {
-     background-color: #d3dce6;
-  }
+<style scoped>
+
 </style>

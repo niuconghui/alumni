@@ -5,7 +5,6 @@
         <el-button icon="el-icon-s-comment" circle class="feedbotton" ></el-button>
       </el-tooltip>
     </el-link>
-    
   </div>
 </template>
 
@@ -27,24 +26,17 @@ export default {
 
 
 <style scoped>
-   .feedback {
+  /* .feedback {
     position: fixed ;
-    left: 94.2%;
+    left: 95.8%;
     top: 90%;
-    padding: 0!important;
-    margin: 0!important;
-  }
+    padding: 0;
+    margin: 0;
+  } */
   .feedbotton {
-    width: 40px!important;
-    height: 40px!important;
-    color: #640000!important;
-    font-size: 16px!important;
-    background-color: #fff!important;
-    border: 1px solid #FFEBCD!important;
-    box-shadow:0 0 5px #FFEBCD!important;
+    width: 42px;
+    height: 42px;
+    font-size: 16px;
   }
 
-   .feedbotton:hover {
-    background-color: #FFEBCD!important;
-  }
 </style>

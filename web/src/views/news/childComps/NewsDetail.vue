@@ -1,42 +1,39 @@
 <template>
   <div>
-    <h2>{{ news.title }}</h2>
-    <div class="time">时间：{{ news.issueTime }} </div>
-    <div v-html="news.content" class="content">
-      {{ news.content }}
+    <div>
+      <h2>{{ news.title }}</h2>
+      <div class="time">时间：{{ news.issueTime }} </div>
+      <div v-html="news.content" class="content"></div>
     </div>
   </div>
 </template>
 
 <script>
-import http from 'network/axios'
-
-import { formatDate } from "@/common/utils";
-
 export default {
-  props: {
-
-  },
+  props: { id: {} },
   components: {
 
   },
   data() {
     return {
-      newsId: null,
       news: {}
     }
   },
-  methods: {
-    async fetchCenter () {
-      const res = await http.get(`/news/${this.newsId}`)
-      this.news = res.data
-      console.log(this.news)
-    },
-  },
   created () {
-    this.newsId = this.$route.params.id
-    this.fetchCenter()
+    this.id && this._getNewsDetail()
   },
+  methods: {
+
+    async _getNewsDetail() { 
+      const res = await this.$api.news.getNewsDetail(this.id)
+      if (res.data.code !== 0) return this.$message({
+        type: 'error',
+        msg: '网络不给给力，请稍后再试'
+      })
+      this.news = res.data.data
+    }
+  },
+
 
 }
 </script>
@@ -44,6 +41,7 @@ export default {
 <style scoped>
 
   h2 {
+    padding: 0;
     text-align: center;
     font-size: 20px;
     color: #555;
@@ -58,5 +56,6 @@ export default {
 
   .content {
     text-indent: 2em;
+    min-height: 400px;
   }
 </style>

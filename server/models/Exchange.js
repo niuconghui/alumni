@@ -1,18 +1,24 @@
 const mongoose = require('mongoose')
+const moment = require('moment')
+const CategoryModel = require('./Category')
+const StudensModel = require('./StudentUser')
 
 const schema = new mongoose.Schema({
   userId: {
-    type: mongoose.SchemaTypes.ObjectId, ref: 'StudentUser'
+    type: mongoose.SchemaTypes.ObjectId, ref: StudensModel
   },
-  content: { type: String,required: true },
-  star: { type: Number },
-  starId: {
-    type: mongoose.SchemaTypes.ObjectId, ref: 'StudentUser'
+  category: { type: mongoose.SchemaTypes.ObjectId, ref: CategoryModel },
+  title: { type: String },
+  content: { type: String, required: true },
+  starNum: { type: Number, default: 0 },
+  commentNum: { type: Number, default: 0 },
+  created_time: {
+    type: String,
+    default: moment().format('YYYY-MM-DD HH:mm:ss')
   },
-  commCount: { type: Number },
-  commContent: { type: String },
-  commentId: {
-    type: mongoose.SchemaTypes.ObjectId, ref: 'StudentUser'
+  last_modified_time: {
+    type: String,
+    default: moment().format('YYYY-MM-DD HH:mm:ss')
   },
 })
 

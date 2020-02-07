@@ -12,6 +12,7 @@
     "element-ui": "^2.12.0",
     "jsonwebtoken": "^8.5.1",
     "vue": "^2.6.10",
+    "vue-editor-interline": "^1.1.2",
     "vue-router": "^3.0.3",
     "vue2-editor": "^2.10.2",
     "vuex": "^3.0.1"
