@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>{{this.id ? '修改' : '添加'}}源校友</h1>
+    <h1>{{this.id ? '修改' : '添加'}}源校友学号</h1>
     <el-form label-width="120px">
       <el-form-item label="学号：" >
         <el-input v-model="model.studentSID"></el-input>

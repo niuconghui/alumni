@@ -8,6 +8,7 @@ export default {
   },
 
   userAvatar(state, avatar) {
+    // console.log('我是 muations 里边的' + avatar)
     state.userAvatar = avatar
   },
 

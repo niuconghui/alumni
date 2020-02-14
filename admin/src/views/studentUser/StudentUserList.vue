@@ -47,6 +47,8 @@
         </el-table-column>
         <el-table-column prop="phoneID" label="手机号" width="120">
         </el-table-column>
+        <el-table-column prop="email" label="邮箱" width="120">
+        </el-table-column>
         <el-table-column prop="birthplace" label="出生地址" width="200">
         </el-table-column>
         <el-table-column prop="address" label="现居地址" width="200">
@@ -91,7 +93,11 @@ export default {
   data() {
     return {
       items: [],
-      model: {},
+      model: {
+        department: {},
+        birthplace: {},
+        address: {}
+      },
       total: 0,
       currentPage: 1,
       pageLimit: 7,

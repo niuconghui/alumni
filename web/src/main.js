@@ -16,6 +16,21 @@ import 'assets/scss/base.css'
 import echarts from 'echarts'
 Vue.prototype.$echarts = echarts
 
+// Vue.mixin({
+//   computed: {
+//     uploadUrl () {
+//       return this.$http.defaults.baseURL +'/upload'
+//     }
+//   },
+//   methods: {
+//     getAuthHeaders () {
+//       return {
+//         Authorization: `Bearer  + ${localStorage.token || ''}`
+//       } 
+//     }
+//   }
+// })
+
 
 Vue.config.productionTip = false
 

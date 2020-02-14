@@ -9,7 +9,8 @@
       <li class="avatar"  v-if="isLogin">
         <div class="drop">
           <div>
-            <img :src=showAvatar alt="">
+            <img :src=showAvatar alt="" v-if="showAvatar !== undefined">
+            <img src="~assets/img/avatar.png" alt="" v-else>
           </div>
           <div class="drop-menu">
             <div 
@@ -39,8 +40,8 @@
       return {
         dropOptions: [
           { text: '写交流', icon: 'el-icon-edit', path: '/exchange/new' },
-          { text: '我的主页', icon: 'el-icon-user-solid', path: '/save' },
-          { text: '设置', icon: 'el-icon-setting', path: '/save' },
+          { text: '我的主页', icon: 'el-icon-user-solid', path: '/user/center' },
+          { text: '设置', icon: 'el-icon-setting', path: '/user/settings/profile' },
           { text: '关于', icon: 'el-icon-warning', path: '/save' },
           { text: '登出', icon: 'el-icon-d-arrow-right', path: '/logout' },
         ]
@@ -52,8 +53,8 @@
         return this.$store.state.userAvatar
       }
     },
-
     methods: {
+      ...mapActions(["setUserId"]),
       dropClick(path) {
         if (path === '/logout') {
           this.$confirm('确认登出吗?', '提示', {
@@ -72,12 +73,13 @@
               message: '注销成功!'
             });
           })
+        } else if (path === '/user/center') {
+          this.$router.push(`/user/center/${this.$store.state.userId}`)
         } else {
-          console.log(path)
           this.$router.push(path)
         }
         
-      }
+      },
     },
   }
 </script>
@@ -177,7 +179,7 @@
     margin: 0;
     padding: 0;
     text-decoration: none;
-    color: #909090;
+    color: $gray-5;
   }
 
   a:hover {

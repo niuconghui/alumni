@@ -3,7 +3,9 @@
     <div class="nav d-flex ">
       <el-col :span="2"></el-col>
       <el-col :span="19"><img src="~assets/img/nxist.png" alt=""></el-col>
-      <el-button type="primary" @click="submit('draftForm')">发表</el-button>
+      <el-button type="primary" @click="submit('draftForm')">
+        {{this.id? '保存' : '发表'}}
+      </el-button>
     </div>
 
     <div class="content d-flex">
@@ -26,7 +28,11 @@
           </el-form-item>
 
           <el-form-item prop="content">
-            <vue-editor v-model="model.content" />
+            <vue-editor 
+              v-model="model.content"
+              useCustomImageHandler 
+              @image-added="handleImageAdded" 
+            />
           </el-form-item>
         </el-form>
       </el-col>
@@ -40,10 +46,14 @@
 
   export default {
     name: 'Draft',
+    props: { id: {} },
     data() {
       return {
         model: {
-          userId: this.$store.state.userId
+          userId: this.$store.state.userId,
+          category: '',
+          title: '',
+          content: ''
         },
         categories: [],
         rules: {
@@ -62,8 +72,16 @@
     components: { VueEditor },
     created() {
       this._getCategories()
+      this._getDraft()
     },
     methods: {
+      async _getDraft() {
+        const res = await this.$api.exchange.getExchangeDetail(this.id)
+        if (res.data.code === 0) {
+          this.model = res.data.data.items
+        }
+      },
+
       async _getCategories() {
         const res = await this.$api.exchange.getCategory()
         if (res.data.code === 0) {
@@ -71,18 +89,43 @@
         } 
       },
 
+      async handleImageAdded (file, Editor, cursorLocation, resetUploader) {
+        const formData = new FormData();
+        formData.append("file", file);
+        const res = await this.$api.exchange.uploadImg(formData)
+        Editor.insertEmbed(cursorLocation, "image", res.data.url);
+        resetUploader();
+      },
+
       submit(draftForm) {
         this.$refs['draftForm'].validate(async valid => {
           if (valid) {
-            const res = await this.$api.exchange.saveExchange(this.model)
-            if (res.data.code === 0) {
-              this.$message({
-                type: 'successd',
-                message: '发表成功了'
+            let res
+            if (this.id) {
+              res = await this.$api.exchange.updateExchange({
+                _id: this.id,
+                category: this.model.category,
+                title: this.model.title,
+                content: this.model.content
               })
-              this.$router.push('/exchange')
+              console.log(res)
+              if (res.data.code === 0) {
+                  this.$message({
+                    type: 'success',
+                    message: '保存成功了'
+                  })
+                  this.$router.push(`/user/center/${this.$store.state.userId}/activities`)
+                }
+            } else {
+              res = await this.$api.exchange.saveExchange(this.model)
+                if (res.data.code === 0) {
+                  this.$message({
+                    type: 'success',
+                    message: '发表成功了'
+                  })
+                  this.$router.push('/exchange')
+                }
             }
-            console.log(res)
           } else {
             this.$message({
               type: 'error',

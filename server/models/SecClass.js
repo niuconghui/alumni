@@ -8,6 +8,7 @@ const schema = new mongoose.Schema({
       class_name: { type: String }
     }]  
   }]
+  
 })
 
 module.exports = mongoose.model('secClass',schema)

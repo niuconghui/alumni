@@ -20,8 +20,11 @@
           </el-select>
         </el-form-item>
         <el-form-item label="新闻内容：">
-          <vue-editor v-model="model.content"
-          useCustomImageHandler @image-added="handleImageAdded"></vue-editor>
+          <vue-editor 
+            v-model="model.content"
+            useCustomImageHandler 
+            @image-added="handleImageAdded" 
+          />
         </el-form-item>
         <el-form-item label="发表时间：" >
           <div class="block">

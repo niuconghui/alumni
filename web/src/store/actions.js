@@ -9,6 +9,7 @@ export default {
 
   setAvatar({ commit }, avatar) {
     commit('userAvatar', avatar)
+    // console.log('我是 actions 里边的' + avatar)
   },
 
   setUserId({ commit }, id) {

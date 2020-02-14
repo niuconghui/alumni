@@ -15,7 +15,7 @@ export default {
     width: 100%;
     background-color: #fff;
     img {
-      margin-left: 15vw;
+      margin-left: 14vw;
       height: 50%;
     }
   }

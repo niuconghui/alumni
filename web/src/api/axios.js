@@ -4,8 +4,6 @@ const http = axios.create({
   baseURL: 'http://localhost:3000/web/api'
 })
 
-export default http  
-
 
 http.interceptors.request.use( config => {
   if (localStorage.token) {
@@ -21,5 +19,7 @@ http.interceptors.request.use( config => {
 //   }, err => {
 //     console.log(err)
 //   })
+
+export default http 
 
 

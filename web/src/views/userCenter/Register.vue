@@ -3,7 +3,7 @@
     <div class="nxist"><img src="~assets/img/nxist.png" alt=""></div>
     <el-card class="register-card">
       <h3>注册</h3>
-      <el-form :model="model" :rules="rules" ref="ruleForm">
+      <el-form :model="model" :rules="rules" ref="registerForm">
         <el-form-item prop="studentName">
           <el-input placeholder="用户名" v-model="model.studentName"></el-input>
         </el-form-item>
@@ -13,11 +13,13 @@
          <el-form-item prop="studentID">
           <el-input placeholder="学号" v-model="model.studentID"></el-input>
         </el-form-item>
-         <el-form-item prop="phoneID">
-          <el-input placeholder="手机号" v-model="model.phoneID"></el-input>
+         <el-form-item prop="email">
+          <el-input placeholder="邮箱" v-model="model.email">
+            <el-button slot="append">获取验证码</el-button>
+          </el-input>
         </el-form-item>
         <el-form-item class="item">
-          <el-button type="primary" class="register-button" @click="register('ruleForm')">注册</el-button>
+          <el-button type="primary" class="register-button" @click="register('registerForm')">注册</el-button>
         </el-form-item>
         <div class="item">
           已有账号？<el-button type="text" class="button" @click="changeLogin">登录</el-button>
@@ -39,31 +41,55 @@
       
     },
     data() {
+      const validateName = async (rule, value, callback) => {
+        const res = await this.$api.user.checkUsername(value)
+        if (res.data.code === 0) {
+          callback()
+        } else {
+          callback(new Error(res.data.msg))
+        }
+      }
+      const validateStudentID = async (rule, value, callback) => {
+        const res = await this.$api.user.getSUsers(value)
+        if (res.data.code === 0) {
+          callback()
+        } else {
+          callback(new Error(res.data.msg))
+        }
+      }
+      const validateEmail = async (rule, value, callback) => {
+        const res = await this.$api.user.checkEmail(value)
+        console.log(res)
+        if (res.data.code === 0) {
+          callback()
+        } else {
+          callback(new Error(res.data.msg))
+        }
+      }
       return {
-        model: {
-          studentName: '',
-          password: '',
-          studentID: '',
-          phoneID: '',
-        },
+        model: {},
         rules: {
           studentName: [
             { required: true, message: '请输入用户名', trigger: 'blur' },
-            { min: 3, max: 6, message: '用户名长度必须在 3 到 6 个字符之间！', trigger: 'blur' }
+            { min: 3, max: 9, message: '用户名长度必须在 3 到 9 个字符之间！', trigger: 'blur' },
+            { validator: validateName, trigger: 'blur' }
           ],
           password: [
             { required: true, message: '请输入密码', trigger: 'blur' },
-            { min: 6, max: 16, message: '密码长度必须在 6 到 16 个字符之间！', trigger: 'blur' }
+            { min: 6, max: 16, message: '密码长度必须在 6 到 16 个字符之间！', trigger: 'blur' },
           ],
           studentID: [
             { required: true, message: '请输入学号', trigger: 'blur' },
-            { min: 8, max: 8, message: '学号长度必须为 8 位！', trigger: 'blur' }
+            { min: 8, max: 8, message: '学号长度必须为 8 位！', trigger: 'blur' },
+            { validator: validateStudentID, trigger: 'blur' }
           ],
-          phoneID: [
-            { required: true, message: '请输入手机号', trigger: 'blur' },
-            { min: 11, max: 11, message: '手机号长度必须为 11 位', trigger: 'blur' }
+          email: [
+            { required: true, message: '请输入邮箱', trigger: 'blur' },
+            { type: 'email', message: '请输入正确的邮箱号', trigger:'blur' },
+            { validator: validateEmail, trigger: 'blur' }
           ],
-        }
+        },
+
       };
     },
     methods: {
@@ -72,10 +98,14 @@
       },
 
       register(formName) {
-        this.$refs[formName].validate((valid) => {
+        this.$refs[formName].validate(async (valid) => {
           if (valid) {
-            alert('注册成功!');
-            this.$router.push('/login')
+            const res = await this.$api.user.register(this.model)
+            if (res.data.code === 0) {
+              this.$message.success('注册成功，请登录！')
+              this.$router.push('/login')
+            }
+            
           } else {
             console.log('error submit!!');
             return false;

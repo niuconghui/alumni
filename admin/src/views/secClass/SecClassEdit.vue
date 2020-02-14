@@ -52,6 +52,7 @@ export default {
   data() {
     return {
       model: {
+        sec_name: '',
         major: [{
           class: []  
         }]
@@ -79,6 +80,7 @@ export default {
       this.model = res.data
     },
     addMajor() {
+      console.log(111)
       this.id && this.fetch()
       this.model.major.push({})
     },

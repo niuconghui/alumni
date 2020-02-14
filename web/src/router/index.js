@@ -21,6 +21,9 @@ const Scenery = () => import('views/scenery/Scenery')
 
 const Register = () => import('views/userCenter/Register')
 const Login = () => import('views/userCenter/Login')
+const Center = () => import('views/userCenter/Center')
+const Profile = () => import('views/userCenter/Profile')
+const Active = () => import("views/userCenter/childComps/Active")
 
 const FeedBack = () => import('views/feedback/FeedBack')
 
@@ -35,6 +38,7 @@ const router = new Router({
     { path: '/', redirect: '/news/newsCenter' },
     { path: '/news', redirect: '/news/newsCenter' },
     { path: '/demeanor', redirect: '/demeanor/academician'},
+    { path: '/user/center/:id', redirect: '/user/center/:id/activities'},
     
     { path: '/', 
       component: MainView,
@@ -65,12 +69,26 @@ const router = new Router({
           component: Scenery
         },
 
-        
+        {path: '/user/center/:id', 
+          component: Center, 
+          props: true, 
+          meta: { requiresAuth: true },
+          children: [
+            { path: '/user/center/:id/activities', component: Active, props: true },
+          ]
+        },
+        {path: '/user/settings/profile', component: Profile, meta: { requiresAuth: true } },
       ]
     },
     { path: '/exchange/detail/:id',component: ExchangeDetail, props: true },
     { 
       path: '/exchange/new', 
+      component: Draft, 
+      props: true,
+      meta: { requiresAuth: true }
+    },
+    { 
+      path: '/exchange/update/:id', 
       component: Draft, 
       props: true,
       meta: { requiresAuth: true }

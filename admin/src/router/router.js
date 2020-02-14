@@ -1,46 +1,46 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import Manage from '../views/Manage'
-import ManageView from '../views/ManageView'
-import Login from '../views/Login'
+const Manage = () => import('views/Manage')
+const ManageView = () => import('views/ManageView')
+const Login = () => import('views/Login')
+
+const NewsEdit = () => import('views/news/NewsEdit')
+const NewsList = () => import('views/news/NewsList')
+
+const CategoryEdit = () => import('views/category/CategoryEdit')
+const CategoryList = () => import('views/category/CategoryList')
+
+const ExchangeEdit = () => import('views/exchange/ExchangeEdit')
+const ExchangeList = () => import('views/exchange/ExchangeList')
 
 
-import NewsEdit from '../views/news/NewsEdit'
-import NewsList from '../views/news/NewsList'
+const CommentEdit = () => import('views/comment/CommentEdit')
+const CommentList = () => import('views/comment/CommentList')
 
-import CategoryEdit from '../views/category/CategoryEdit'
-import CategoryList from '../views/category/CategoryList'
+const DemeanorEdit = () => import('views/demeanor/DemeanorEdit')
+const DemeanorList = () => import('views/demeanor/DemeanorList')
 
-import ExchangeEdit from '../views/exchange/ExchangeEdit'
-import ExchangeList from '../views/exchange/ExchangeList'
+const SceneryEdit = () => import('views/scenery/SceneryEdit')
+const SceneryList = () => import('views/scenery/SceneryList')
 
-import CommentEdit from '../views/comment/CommentEdit'
-import CommentList from '../views/comment/CommentList'
+const SourceUserEdit = () => import('views/sourceUser/SourceUserEdit')
+const SourceUserList = () => import('views/sourceUser/SourceUserList')
 
-import DemeanorEdit from '../views/demeanor/DemeanorEdit'
-import DemeanorList from '../views/demeanor/DemeanorList'
+const StudentUserEdit = () => import('views/studentUser/StudentUserEdit')
+const StudentUserList = () => import('views/studentUser/StudentUserList')
 
-import SceneryEdit from '../views/scenery/SceneryEdit'
-import SceneryList from '../views/scenery/SceneryList'
+const AdminUserEdit = () => import('views/adminUser/AdminUserEdit')
+const AdminUserList = () => import('views/adminUser/AdminUserList')
 
-import SourceUserEdit from '../views/sourceUser/SourceUserEdit'
-import SourceUserList from '../views/sourceUser/SourceUserList'
+const SecClassEdit = () => import('views/secClass/SecClassEdit')
+const SecClassList = () => import('views/secClass/SecClassList')
 
-import StudentUserEdit from '../views/studentUser/StudentUserEdit'
-import StudentUserList from '../views/studentUser/StudentUserList'
+const CityEdit = () => import('views/city/CityEdit')
+const CityList = () => import('views/city/CityList')
 
-import AdminUserEdit from '../views/adminUser/AdminUserEdit'
-import AdminUserList from '../views/adminUser/AdminUserList'
-
-import SecClassEdit from '../views/secClass/SecClassEdit'
-import SecClassList from '../views/secClass/SecClassList'
-
-import CityEdit from '../views/city/CityEdit'
-import CityList from '../views/city/CityList'
-
-import FeedbackEdit from '../views/feedback/FeedbackEdit'
-import FeedbackList from '../views/feedback/FeedbackList'
+const FeedbackEdit = () => import('views/feedback/FeedbackEdit')
+const FeedbackList = () => import('views/feedback/FeedbackList')
 
 Vue.use(Router)
 

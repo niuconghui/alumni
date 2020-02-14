@@ -1,55 +1,32 @@
 const mongoose = require('mongoose')
+const encrypt = require('../utils/encrypt')
 
 const moment = require('moment')
 
 const schema = new mongoose.Schema({
-  studentName: { type: String ,required: true },
+  studentName: { type: String , required: true },
   password: {
     type: String,
     select: false,
     set (val) {
-      return require('bcrypt').hashSync(val,10)
+      return encrypt(val)
     },
     required: true
   },
-  avatar: { type: String, default: '/public/avatar-default.png' },
-  trueName: { type: String },
-  gender: { type: String },
-  studentID: { type: Number },
-  department: {
-    sec_name: { type: String },
-    major: [{
-      major_name: { type: String },
-      class: [{
-        class_name: { type: String }
-      }]  
-    }]
-  },
-  startYear: { type: String },
-  endYear: { type: String },
-  phoneID: { type: Number },
-  email: { type: String },
-  birthplace: {
-    name: { type: String },
-    city: [{
-      name: { type: String },
-      area: [{
-        name: { type: String }
-      }]  
-    }]
-  },
-  address: {
-    name: { type: String },
-    city: [{
-      name: { type: String },
-      area: [{
-        name: { type: String }
-      }]  
-    }]
-  },
-  company_name: { type: String },
-  birthday: { type: String },
-  motto: { type: String, default: '这个人很懒，什么都没说~~~' },
+  avatar: { type: String },
+  trueName: { type: String, default: '' },
+  gender: { type: String, default: '' },
+  studentID: { type: Number, required: true },
+  department: { type: Array, default: () => [] },
+  startYear: { type: String, default: '' },
+  endYear: { type: String, default: '' },
+  phoneID: { type: Number, default: '' },
+  email: { type: String, required: true  },
+  birthplace: { type: Array, default: () => [] },
+  address: { type: Array, default: () => [] },
+  company_name: { type: String, default: '' },
+  birthday: { type: String, default: '' },
+  motto: { type: String , default: ''},
   created_time: {
     type: String,
     default: moment().format('YYYY-MM-DD HH:mm:ss')

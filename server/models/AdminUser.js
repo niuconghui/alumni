@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const encrypt = require('../utils/encrypt')
 
 const schema = new mongoose.Schema({
   adminName: {type: String},
@@ -6,7 +7,7 @@ const schema = new mongoose.Schema({
     type: String,
     select: false,
     set (val) {
-      return require('bcrypt').hashSync(val,10)
+      return encrypt(val)
     },
   }
 })

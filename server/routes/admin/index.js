@@ -2,6 +2,7 @@ module.exports = app => {
   const express = require('express')
   const jwt = require('jsonwebtoken')
   const AdminUser = require('../../models/AdminUser')
+  const encrypt = require('../../utils/encrypt')
   const router = express.Router({
     mergeParams: true
   })
@@ -51,7 +52,6 @@ module.exports = app => {
       items = await req.model.find().setOptions(queryOptions)
     }
 
-    // console.log(items)
     res.send({
       items,
       total,
@@ -77,8 +77,7 @@ module.exports = app => {
   const authMiddleware = require('../../middleware/auth')
   const resourceMiddleware = require('../../middleware/resource')
 
-  // app.use('/admin/api/rest/:resource',authMiddleware(),resourceMiddleware(),router)
-  app.use('/admin/api/rest/:resource', resourceMiddleware(), router)
+  app.use('/admin/api/rest/:resource',authMiddleware(),resourceMiddleware(),router)
 
 
   // 图片上传
@@ -98,8 +97,8 @@ module.exports = app => {
       return res.status(422).send({ message: '用户不存在' })
     }
     // 校检密码
-    const isValid = require('bcrypt').compareSync(password, admin.password)
-    if (!isValid) {
+    
+    if (encrypt(password) !== admin.password) {
       return res.status(422).send({ message: '密码错误' })
     }
     // 返回 token

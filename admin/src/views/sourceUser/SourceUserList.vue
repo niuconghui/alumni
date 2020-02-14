@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>源校友列表</h1>
+    <h1>源校友学号列表</h1>
     <el-table :data="items">
       <el-table-column
         type="index"
@@ -30,7 +30,7 @@ export default {
   methods: {
     async fetch () {
       const res = await this.$http.get('rest/sourceUsers')
-      this.items = res.data
+      this.items = res.data.items
     },
     edit (row) {
       this.$router.push(`/sourceUser/edit/${row._id}`)

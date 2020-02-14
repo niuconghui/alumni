@@ -12,6 +12,8 @@ module.exports = app => {
 
   const feedbackController = require('../../controller/web/feedback')
 
+  const imgUploadController = require('../../controller/web/imgUpload')
+
   // const exchangeModel = require('../../models/Exchange')
   // router.get('/insert', async (req, res) => {
   //   // await exchangeModel.deleteMany({})
@@ -30,10 +32,26 @@ module.exports = app => {
   // })
 
   // ----------------------- 用户中心 ------------------------------
+  router.get('/user/susers', userController.getSUsers)
+
+  router.get('/user/checkUsername', userController.checkUsername)
+
+  router.get('/user/checkEmail', userController.checkEmail)
+
+  router.post('/user/register', userController.register)
 
   router.post('/user/login', userController.login)
 
   router.get('/user/userInfo', userController.getUserInfo)
+
+  router.get('/user/otherUserInfo/:id', userController.getOtherUserInfo)
+
+  router.put('/user/userInfo', userController.saveUserInfo)
+
+  router.get('/department', userController.getDepartments)
+
+  router.get('/city', userController.getCities)
+
 
   // ----------------------- 新闻 ----------------------------------
 
@@ -49,9 +67,25 @@ module.exports = app => {
 
   router.get('/exchange', exchangeController.getExchange)
 
+  router.post('/exchange/create', exchangeController.savaExchange)
+
+  router.put('/exchange/update/:id', exchangeController.updateExchange)
+
+  router.delete('/exchange/delete/:id', exchangeController.deleteExchange)
+
   router.get('/exchange/detail/:id', exchangeController.getExchangeDetail)
 
-  router.post('/exchange/create', exchangeController.savaExchange)
+  router.get('/user/exchanges/:id', exchangeController.getUserExchanges)
+
+  router.get('/user/otherUserExchanges/:id', exchangeController.getOtherUserExchanges)
+
+  router.post('/star/:id', exchangeController.star)
+
+  router.post('/comment/:id', exchangeController.saveComment)
+
+  router.get('/comments/:id', exchangeController.getComments)
+
+  router.delete('/comment/:id', exchangeController.deleteComment)
 
   // ----------------------- 校友风采 ----------------------------------
 
@@ -71,6 +105,16 @@ module.exports = app => {
 
   router.get('/fcategory', feedbackController.getCategory)
 
+  // ----------------------- 图片上传 -------------------------------
+  // imgUploadController
+  const multer = require('multer')
+  const upload = multer({ dest: __dirname + '/../../uploads' })
+  router.post('/upload', upload.single('file'), imgUploadController.imgUpload)
+
   app.use('/web/api', router)
+
+
+
+
 
 }

@@ -41,29 +41,33 @@
         rules: {
           studentName: [
             { required: true, message: '请输入用户名', trigger: 'blur' },
-            { min: 3, max: 6, message: '长度在 3 到 6 个字符', trigger: 'blur' }
+            { min: 3, max: 9, message: '长度在 3 到 9 个字符', trigger: 'blur' }
           ],
           password: [
             { required: true, message: '请输入密码', trigger: 'blur' },
-            { min: 6, max: 16, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+            { min: 6, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur' }
           ],
         },
       };
     },
 
     methods: {
-      ...mapActions(["setLogin", "setAvatar"]),
-       login(formName) {
+      ...mapActions(["setLogin", "setAvatar", "setUserId"]),
+      login(formName) {
         this.$refs['loginForm'].validate(async (valid) => {
           if (valid) {
             const res = await this.$api.user.login(this.model)
             if (res.data.code !== 0) return this.$message({ type: 'error', message: res.data.msg})
             localStorage.setItem('token', res.data.data.token)
             this.setLogin(true)
+            this.setUserId(res.data.data.userId)
             this.setAvatar(res.data.data.uavatar)
             this.$message({ type: 'success', message: '登录成功' })
-            this.$router.push({path: '/' })
-            console.log(res)
+            if (this.$route.query.redirect) {
+              this.$router.replace(this.$route.query.redirect)
+            } else {
+              this.$router.push('/')
+            }
           } else {
             return false;
           }
