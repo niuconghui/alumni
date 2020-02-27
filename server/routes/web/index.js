@@ -13,24 +13,7 @@ module.exports = app => {
   const feedbackController = require('../../controller/web/feedback')
 
   const imgUploadController = require('../../controller/web/imgUpload')
-
-  // const exchangeModel = require('../../models/Exchange')
-  // router.get('/insert', async (req, res) => {
-  //   // await exchangeModel.deleteMany({})
-  //   const exchanges = []
-  //   for(let i=0;i<30;i++){
-  //     let item = '其他'
-  //     exchanges.push({ 
-  //       userId: '5e3a71b150559a2444f5c07a' ,
-  //       category: '5e37baba60a86c23842f530d',
-  //       title: item + i,
-  //       content: '测试'+item+'数据数据'
-  //     })
-  //   }
-  //   await exchangeModel.insertMany(exchanges)
-  //   res.send({code: 0})
-  // })
-
+  
   // ----------------------- 用户中心 ------------------------------
   router.get('/user/susers', userController.getSUsers)
 
@@ -94,6 +77,10 @@ module.exports = app => {
   router.get('/demeanor/academician', demeanorController.getAcademician)
 
   router.get('/demeanor/detail/:id', demeanorController.getDemeanorDetail)
+
+  router.get('/demeanor/search', demeanorController.search)
+
+  router.get('/demeanor/province', demeanorController.getProvince)
 
   // ---------------------- 校园风光 --------------------------------
 

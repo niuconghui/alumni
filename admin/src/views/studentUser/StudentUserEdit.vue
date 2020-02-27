@@ -35,7 +35,7 @@
             <el-cascader
               v-model="model.department"
               :options="departments"
-              :props="{ expandTrigger: 'hover' }"
+              :props="{ expandTrigger: 'hover', checkStrictly: true }"
               ></el-cascader>
           </div>
         </el-form-item>
@@ -57,6 +57,16 @@
             placeholder="选择月">
           </el-date-picker>
         </el-form-item>
+        <el-form-item label="年级">
+          <el-select v-model="model.grade" placeholder="请选择">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="手机号：">
           <el-input v-model="model.phoneID"></el-input>
         </el-form-item>
@@ -68,7 +78,7 @@
             <el-cascader
               v-model="model.birthplace"
               :options="cities"
-              :props="{ expandTrigger: 'hover' }"
+              :props="{ expandTrigger: 'hover', checkStrictly: true }"
               ></el-cascader>
           </div>
         </el-form-item>
@@ -77,7 +87,7 @@
             <el-cascader
               v-model="model.address"
               :options="cities"
-              :props="{ expandTrigger: 'hover' }"
+              :props="{ expandTrigger: 'hover', checkStrictly: true }"
               ></el-cascader>
           </div>
         </el-form-item>
@@ -118,6 +128,19 @@ export default {
       value: [],
       departments: [],
       cities: [],
+      options: [{
+          value: '大一',
+          label: '大一'
+        }, {
+          value: '大二',
+          label: '大二'
+        }, {
+          value: '大三',
+          label: '大三'
+        }, {
+          value: '大四',
+          label: '大四'
+        }],
     }
   },
   created() {

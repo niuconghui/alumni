@@ -10,7 +10,9 @@
   import '../../../node_modules/echarts/map/js/china.js' // 引入中国地图数据
   export default {
     name: "echarts",
-    props: ["userJson"],
+    props: {
+      userJson: { type: Object }
+    },
     data() {
       return {
         chart: null

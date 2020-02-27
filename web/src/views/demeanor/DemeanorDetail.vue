@@ -24,7 +24,6 @@ export default {
 
     async _getDemeanorDetail() { 
       const res = await this.$api.demeanor.getDemeanorDetail(this.id)
-      console.log(res)
       if (res.data.code !== 0) return this.$message({
         type: 'error',
         msg: '网络不给给力，请稍后再试'

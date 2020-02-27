@@ -69,7 +69,8 @@ const router = new Router({
           component: Scenery
         },
 
-        {path: '/user/center/:id', 
+        {
+          path: '/user/center/:id', 
           component: Center, 
           props: true, 
           meta: { requiresAuth: true },
@@ -77,7 +78,11 @@ const router = new Router({
             { path: '/user/center/:id/activities', component: Active, props: true },
           ]
         },
-        {path: '/user/settings/profile', component: Profile, meta: { requiresAuth: true } },
+        {
+          path: '/user/settings/profile', 
+          component: Profile, 
+          meta: { requiresAuth: true } 
+        },
       ]
     },
     { path: '/exchange/detail/:id',component: ExchangeDetail, props: true },
@@ -99,7 +104,7 @@ const router = new Router({
     { path: '/feedback', component: FeedBack},
 
     { path: '/404', component: NotFound },
-    // { path: '*', redirect: '/404' }
+    { path: '*', redirect: '/404' }
   ]
 })
 

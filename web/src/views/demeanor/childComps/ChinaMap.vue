@@ -1,17 +1,20 @@
 <template>
   <div class="echarts">
-    <div :style="{height:'400px',width:'100%',}" ref="myEchart"></div>
+    <div :style="{height:'400px',width:'100%',}" ref="myEchart">
+    </div>
   </div>
 </template>
 
 
 <script>
   import echarts from "echarts";
-  // import 'echarts/map/js/china.js' // 引入中国地图数据
   import '../../../../node_modules/echarts/map/js/china.js'
   export default {
     name: "echarts",
-    props: ["userJson"],
+    props: {
+      userJson: { type: Array },
+      province: { type: Array }
+    },
     data() {
       return {
         chart: null
@@ -29,7 +32,6 @@
     },
     methods: {
       chinaConfigure() {
-        console.log(this.userJson)
         let myChart = echarts.init(this.$refs.myEchart); //这里是为了获得容器所在位置    
         window.onresize = myChart.resize;
         myChart.setOption({ // 进行相关配置
@@ -77,25 +79,26 @@
               name: '校友分布', // 浮动框的标题
               type: 'map',
               geoIndex: 0,
-              data: [{
-                "name": "河南",
-                "value": 100
-              }, {
-                "name": "上海",
-                "value": 142
-              }, {
-                "name": "山东",
-                "value": 1000
-              }, {
-                "name": "深圳",
-                "value": 92
-              }, {
-                "name": "湖北",
-                "value": 810
-              }, {
-                "name": "四川",
-                "value": 453
-              }]
+              data: this.userJson 
+              // data: [{
+              //   name: "河南",
+              //   value: 100
+              // }, {
+              //   name: "上海",
+              //   value: 142
+              // }, {
+              //   name: "山东",
+              //   value: 1000
+              // }, {
+              //   name: "深圳",
+              //   value: 92
+              // }, {
+              //   name: "湖北",
+              //   value: 810
+              // }, {
+              //   name: "四川",
+              //   value: 453
+              // }]
             }
           ]
         })

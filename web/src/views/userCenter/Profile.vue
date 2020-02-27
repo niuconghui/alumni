@@ -52,7 +52,7 @@
                 <el-cascader
                   v-model="model.department"
                   :options="departments"
-                  :props="{ expandTrigger: 'hover' }"
+                  :props="{ expandTrigger: 'hover', checkStrictly: true  }"
                 ></el-cascader>
               </div>
             </el-col>
@@ -75,6 +75,16 @@
               placeholder="选择月"
             ></el-date-picker>
           </el-form-item>
+          <el-form-item label="年级：">
+            <el-select v-model="model.grade" placeholder="年级">
+              <el-option
+                v-for="item in grades"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
         </el-tab-pane>
 
         <el-tab-pane label="家庭信息" name="third">
@@ -84,7 +94,7 @@
                 <el-cascader
                   v-model="model.birthplace"
                   :options="cities"
-                  :props="{ expandTrigger: 'hover' }"
+                  :props="{ expandTrigger: 'hover', checkStrictly: true }"
                 ></el-cascader>
               </div>
             </el-col>
@@ -95,7 +105,7 @@
                 <el-cascader
                   v-model="model.address"
                   :options="cities"
-                  :props="{ expandTrigger: 'hover' }"
+                  :props="{ expandTrigger: 'hover', checkStrictly: true }"
                 ></el-cascader>
               </div>
             </el-col>
@@ -176,6 +186,21 @@ export default {
       uploadUrl: "http://localhost:3000/web/api/upload",
       departments: [],
       cities: [],
+      grades: [{
+          value: 'first',
+          label: '大一'
+        }, {
+          value: 'second',
+          label: '大二'
+        },
+        {
+          value: 'third',
+          label: '大三'
+        },
+        {
+          value: 'four',
+          label: '大四'
+        }],
       rules: {
         studentName: [
           { required: true, message: '请输入用户名', trigger: 'blur' },

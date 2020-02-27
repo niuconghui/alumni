@@ -45,6 +45,8 @@
         </el-table-column>
         <el-table-column prop="endYear" label="毕业时间" width="100">
         </el-table-column>
+        <el-table-column prop="grade" label="年级" width="100">
+        </el-table-column>
         <el-table-column prop="phoneID" label="手机号" width="120">
         </el-table-column>
         <el-table-column prop="email" label="邮箱" width="120">

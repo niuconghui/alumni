@@ -65,7 +65,6 @@
       },
 
       handleUserExchangeEditClick(id) {
-        console.log(id)
         this.$router.push(`/exchange/update/${id}`)
       },
 

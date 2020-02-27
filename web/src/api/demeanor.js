@@ -22,5 +22,23 @@ export default {
   getDemeanorDetail(id) {
     return http.get(`demeanor/detail/${id}`)
   },
+
+  getDepartments() {
+    return http.get('/department')
+  },
+
+  getCities() {
+    return http.get('/city')
+  },
+
+  getSearch(params) {
+    return http.get('/demeanor/search', {
+      params
+    })
+  },
+
+  getProvince() {
+    return http.get('/demeanor/province')
+  }
 }
 
