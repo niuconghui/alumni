@@ -94,6 +94,13 @@
               <el-menu-item index="/feedback/list">反馈列表</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
+           <el-submenu index="10">
+            <template slot="title"><i class="el-icon-chat-dot-square"></i>广告管理</template>
+            <el-menu-item-group>
+              <el-menu-item index="/ad/create">添加广告</el-menu-item>
+              <el-menu-item index="/ad/list">广告列表</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
         </el-menu>
       </el-aside>
       

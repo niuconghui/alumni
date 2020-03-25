@@ -28,6 +28,8 @@ const schema = new mongoose.Schema({
   company_name: { type: String, default: '' },
   birthday: { type: String, default: '' },
   motto: { type: String , default: ''},
+  qq: { type: String , default: ''},
+  wechat: { type: String , default: ''},
   created_time: {
     type: String,
     default: moment().format('YYYY-MM-DD HH:mm:ss')

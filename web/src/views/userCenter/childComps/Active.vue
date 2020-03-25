@@ -1,6 +1,7 @@
 <template>
   <div class="active">
-    <active-item 
+    <div v-if="exchanges.length != 0">
+      <active-item 
       class="active-item"
       v-for="(item, index) in exchanges"
       :key="item._id"
@@ -11,7 +12,11 @@
       :isShowEditAndDeleteBtn="isShowEditAndDeleteBtn"
       @userExchangeEditClick="handleUserExchangeEditClick"
       @userExchangeDeleteClick="handleUserExchangeDeleteClick"
-    />
+      />
+    </div>
+    <div class="default" v-else>
+      这里什么都没有哦~
+    </div>
   </div>
 </template>
 
@@ -87,11 +92,16 @@
 
 <style  lang="scss" scoped>
 .active {
-  color: #fff;
+  color: #666;
   .active-item {
     margin: 0 0 1vw 0;
   }
 
+}
+
+.default {
+  padding: 2%;
+  margin: 0 auto;
 }
  
 </style>

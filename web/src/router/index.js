@@ -12,6 +12,9 @@ const Exchange = () => import('views/exchange/Exchange')
 const ExchangeDetail = () => import('views/exchange/ExchangeDetail')
 const Draft = () => import('views/exchange/Draft')
 
+const Chatroom = () => import('views/chatroom/Chatroom')
+const ChatroomDetail = () => import('views/chatroom/ChatroomDetail')
+
 const Demeanor = () => import('views/demeanor/Demeanor')
 const Academician = () => import('views/demeanor/childComps/Academician')
 const Alumni = () => import('views/demeanor/childComps/Alumni')
@@ -55,6 +58,13 @@ const router = new Router({
 
         { path: '/exchange',
           component: Exchange,
+        },
+
+        
+        {
+          path: '/chatroom',
+          component: ChatroomDetail,
+          meta: { requiresAuth: true }
         },
 
         { path: '/demeanor',

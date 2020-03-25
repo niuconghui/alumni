@@ -49,7 +49,7 @@ exports.getExchange = async(req, res) => {
   
   const data = items.map(item => {
     let canStar
-    if (item.starNum.includes(userInfo.id)) {
+    if (userInfo && item.starNum.includes(userInfo.id)) {
       canStar = false
     } else {
       canStar = true

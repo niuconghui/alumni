@@ -2,6 +2,8 @@ const express = require('express')
 
 const app = express() 
 
+const http = require('http').Server(app)
+
 app.use(require('cors')())
 app.use(express.json())   
 app.use('/uploads',express.static(__dirname + '/uploads')) 
@@ -18,6 +20,10 @@ require('./routes/admin/verify')(app)
 
 require('./routes/web')(app)
 
-app.listen(3000, (req,res) => {
+// socket 
+require('../server/controller/web/socket')(http)
+
+
+http.listen(3000, (req,res) => {
   console.log('http://localhost:3000')
 })

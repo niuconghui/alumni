@@ -16,21 +16,16 @@ import 'assets/scss/base.css'
 import echarts from 'echarts'
 Vue.prototype.$echarts = echarts
 
-// Vue.mixin({
-//   computed: {
-//     uploadUrl () {
-//       return this.$http.defaults.baseURL +'/upload'
-//     }
-//   },
-//   methods: {
-//     getAuthHeaders () {
-//       return {
-//         Authorization: `Bearer  + ${localStorage.token || ''}`
-//       } 
-//     }
-//   }
-// })
-
+import VueSocketIO from 'vue-socket.io'
+import socketio from 'socket.io-client'
+ 
+Vue.use(new VueSocketIO({
+    debug: true,
+    autoConnect: false,
+    // connection: socketio('http://localhost:3000/chat'), 
+    connection: 'http://localhost:3000/',
+  })
+)
 
 Vue.config.productionTip = false
 

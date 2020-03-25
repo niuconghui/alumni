@@ -70,8 +70,13 @@
               :key="item._id">
               <img src="~assets/img/avatar.png" alt="">
               <div>
-                <span>{{item.studentName}}{{item.studentID}}</span>
-                <el-button type="primary" size="mini" @click="viewUser(item._id)">查看<i class="el-icon-plus el-icon--right"></i></el-button>
+                <span>{{item.studentName}}({{item.studentID}})</span>
+                <el-button 
+                  type="primary" 
+                  size="mini" 
+                  @click="viewUser(item._id)">
+                  查看<i class="el-icon-plus el-icon--right"></i>
+                </el-button>
               </div>
             </li>
           </ul>
@@ -165,7 +170,10 @@
       },
 
       viewUser(id) {
-        this.$router.push(`/user/center/${id}`)
+        let routerData = this.$router.resolve({
+          path: `/user/center/${id}`
+        })
+        window.open(routerData.href, '_blank')
       },
 
       async getSearch() {
@@ -178,8 +186,10 @@
             this.targetUsers = res.data.data
           }
         } else {
-          return this.$message.warning('请检查检索条件')
+          this.targetUsers = []
         }
+
+        
       },
 
       async _getProvince() {

@@ -12,7 +12,15 @@ module.exports = app => {
 
   const feedbackController = require('../../controller/web/feedback')
 
+  const adController = require('../../controller/web/ad')
+
   const imgUploadController = require('../../controller/web/imgUpload')
+
+  const socketController = require('../../controller/web/socket')
+
+  router.get('/socketUrl', (req, res) => {
+    res.send(console.log(socketController.createChatroom))
+  })
   
   // ----------------------- 用户中心 ------------------------------
   router.get('/user/susers', userController.getSUsers)
@@ -92,6 +100,10 @@ module.exports = app => {
 
   router.get('/fcategory', feedbackController.getCategory)
 
+  // ---------------------- 广告 ------------------------------------
+
+  router.get('/ad', adController.getAd)
+
   // ----------------------- 图片上传 -------------------------------
   // imgUploadController
   const multer = require('multer')
@@ -99,9 +111,5 @@ module.exports = app => {
   router.post('/upload', upload.single('file'), imgUploadController.imgUpload)
 
   app.use('/web/api', router)
-
-
-
-
 
 }

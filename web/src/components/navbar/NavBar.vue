@@ -3,7 +3,7 @@
     <ul class="header-ul">
       <li><router-link to="/news">新闻中心</router-link></li>
       <li><router-link to="/exchange">校友交流</router-link></li>
-      <li><router-link to="/class">关注班级</router-link></li>
+      <li><router-link to="/chatroom">在线交流</router-link></li>
       <li><router-link to="/demeanor">校友风采</router-link></li>
       <li><router-link to="/scenery">校园风光</router-link></li>
       <li class="avatar"  v-if="isLogin">

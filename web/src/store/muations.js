@@ -14,5 +14,9 @@ export default {
 
   userId(state, id) {
     state.userId = id
-  }
+  },
+
+  userName(state, name) {
+    state.userName = name
+  },
 }

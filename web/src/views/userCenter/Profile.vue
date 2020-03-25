@@ -53,7 +53,8 @@
                   v-model="model.department"
                   :options="departments"
                   :props="{ expandTrigger: 'hover', checkStrictly: true  }"
-                ></el-cascader>
+                  clearable
+                />
               </div>
             </el-col>
           </el-form-item>
@@ -95,7 +96,8 @@
                   v-model="model.birthplace"
                   :options="cities"
                   :props="{ expandTrigger: 'hover', checkStrictly: true }"
-                ></el-cascader>
+                  clearable
+                />
               </div>
             </el-col>
           </el-form-item>
@@ -106,7 +108,8 @@
                   v-model="model.address"
                   :options="cities"
                   :props="{ expandTrigger: 'hover', checkStrictly: true }"
-                ></el-cascader>
+                  clearable
+                />
               </div>
             </el-col>
           </el-form-item>
@@ -187,18 +190,18 @@ export default {
       departments: [],
       cities: [],
       grades: [{
-          value: 'first',
+          value: '大一',
           label: '大一'
         }, {
-          value: 'second',
+          value: '大二',
           label: '大二'
         },
         {
-          value: 'third',
+          value: '大三',
           label: '大三'
         },
         {
-          value: 'four',
+          value: '大四',
           label: '大四'
         }],
       rules: {

@@ -60,10 +60,11 @@ exports.getDemeanorDetail = async(req, res) => {
 
 exports.search = async(req, res) => {
   
-  const { keyword, address, department, gender, grade} = req.query
+  const { keyword, address, department, gender, grade } = req.query
 
   let reg_keyword = new RegExp(keyword, 'i')
 
+  if (keyword || address || department || gender || grade) {
     const field = {
       $or: [
         { studentName: { $regex: reg_keyword } },
@@ -99,6 +100,11 @@ exports.search = async(req, res) => {
     let items 
     items = await UserModel.find(field)
     res.send(result.success(items))
+  } else {
+    res.send(result.error(-1, '请输入查询条件'))
+  }
+
+    
 }
 
 exports.getProvince = async(req, res) => {

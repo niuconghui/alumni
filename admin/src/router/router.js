@@ -42,6 +42,9 @@ const CityList = () => import('views/city/CityList')
 const FeedbackEdit = () => import('views/feedback/FeedbackEdit')
 const FeedbackList = () => import('views/feedback/FeedbackList')
 
+const AdEdit = () => import('views/ad/AdEdit')
+const AdList = () => import('views/ad/AdList')
+
 Vue.use(Router)
 
 const router = new Router({
@@ -101,6 +104,10 @@ const router = new Router({
         { path: '/feedback/create', component: FeedbackEdit },
         { path: '/feedback/edit/:id', component: FeedbackEdit, props: true },
         { path: '/feedback/list', component: FeedbackList },
+
+        { path: '/ad/create', component: AdEdit },
+        { path: '/ad/edit/:id', component: AdEdit, props: true },
+        { path: '/ad/list', component: AdList },
 
       ]
     },

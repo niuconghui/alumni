@@ -52,7 +52,7 @@
     },
 
     methods: {
-      ...mapActions(["setLogin", "setAvatar", "setUserId"]),
+      ...mapActions(["setLogin", "setAvatar", "setUserId", "setUsername"]),
       login(formName) {
         this.$refs['loginForm'].validate(async (valid) => {
           if (valid) {
@@ -62,6 +62,9 @@
             this.setLogin(true)
             this.setUserId(res.data.data.userId)
             this.setAvatar(res.data.data.uavatar)
+            console.log(res.data.data);
+            this.setUsername(res.data.data.uname)
+
             this.$message({ type: 'success', message: '登录成功' })
             if (this.$route.query.redirect) {
               this.$router.replace(this.$route.query.redirect)

@@ -11,7 +11,8 @@ const store = new Vuex.Store({
   state: {
     isLogin: false,
     userAvatar: '',
-    userId: ''
+    userId: '',
+    userName: ''
   },
   actions,
   mutations,

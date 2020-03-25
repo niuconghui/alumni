@@ -5,8 +5,19 @@
       <img src="~assets/img/avatar.png" alt="" v-else>
       <div class="info-base flex-1">
         <div>{{user !== null ? user.studentName : ''}}</div>
-        <div>我是：{{user !== null ? user.trueName : '宁理校友'}}</div>
-        <div>{{user !== null ? user.motto : ''}}</div>
+        <div v-if="user.trueName">真实姓名：{{user.trueName}}</div>
+        <div v-if="user.gender">性别：{{user.gender}}</div>
+        <div v-if="user.studentID">学号：{{user.studentID}}</div>
+        <div v-if="user.phoneID">手机号：{{user.phoneID}}</div>
+        <div v-if="isShowDepartment">
+          院系班级：<span v-for="item in user.department">{{item}} &nbsp;</span>
+        </div>
+        <div v-if="user.grade">年级：{{user.grade}}</div>
+        <div v-if="isShowAddress">
+          家庭地址：<span v-for="address in user.address">{{address}} &nbsp;</span>
+        </div>
+        <div v-if="user.birthday">生日：{{user.birthday}}</div>
+        <div v-if="user.motto">我的座右铭：{{user.motto}}</div>
       </div>
       <div class="edit" v-if="this.$store.state.userId == id">
         <el-button @click="editProfile">编辑个人资料</el-button>
@@ -49,8 +60,22 @@
         currentType: 'active',
       }
     },
+    computed: {
+      isShowDepartment(el) {
+        return el.user.department && el.user.department.length > 0
+      },
+
+      isShowAddress(el) {
+        return el.user.address && el.user.address.length > 0
+      },
+
+      showGrade(el) {
+        console.log(el);
+      }
+    },
     created() {
       this._getUser()
+      console.log(this.isShowDepartment);
     },
     methods: {
     // -------------------------网络请求-----------------------------------
@@ -113,18 +138,14 @@
     
     .info-base {
       margin: 0 0 0 1.5vw;
-      div:nth-child(1) {
+      div {
+        margin-top: 1vw;
+      }
+
+      div:first-child {
         font-size: 1.5rem;
         font-weight: 600;
         color: #333;
-      }
-
-      div:nth-child(2) {
-        margin-top: 1vw;
-      }
-
-      div:nth-child(3) {
-        margin-top: 1vw;
       }
     }
 
@@ -139,20 +160,21 @@
   .content {
     margin: 1vw 0 0 0 ;
     width: 100%;
-    // height: 30vw;
-    // background-color: #fff;
+    min-height: 30vw;
+    background-color: #fff;
 
     .nav {
       width: 100%;
       line-height: 3.5vw;
       border-bottom: 1px solid $gray-2;
       background: $white;
+      cursor: pointer;
       ul {
         padding: 0;
         margin: 0;
       }
       li {
-        padding: 0 2vw 0 2vw;
+        padding: .5vw 2vw 0 2vw;
         list-style-type: none;
         font-size: 1.1rem;
       }

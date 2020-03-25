@@ -11,8 +11,9 @@
     created() {
       this._getUserInfo()
     },
+
     methods: {
-      ...mapActions(["setLogin", "setAvatar", "setUserId"]),
+      ...mapActions(["setLogin", "setAvatar", "setUserId", "setUsername"]),
 
       async _getUserInfo() {
         if (localStorage.getItem('token')) {
@@ -20,6 +21,7 @@
           this.setLogin(true)
           this.setUserId(res.data.data.user._id)
           this.setAvatar(res.data.data.user.avatar)
+          this.setUsername(res.data.data.user.studentName)
         } else {
           console.log('未获取到 token');
           this.setAvatar('')

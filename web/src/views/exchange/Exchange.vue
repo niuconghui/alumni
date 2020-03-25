@@ -37,7 +37,7 @@
       </div>
 
       <div class="ad-card">
-        <Adcard />
+        <Adcard v-for="item in adList" :key="item._id" :ad="item"/>
       </div>
     </div>
   </div>
@@ -52,6 +52,7 @@ export default {
     return {
       categories: [],
       currentIndex: 0,
+      adList: [],
       exchanges: {
         "5e436360f8b8801df8dc2d82": { page: 1, list: [] },
         "5e43637af8b8801df8dc2d83": { page: 1, list: [] },
@@ -75,6 +76,7 @@ export default {
   created() {
     this._getCategory();
     this._getExchange(this.currentType)
+    this._getAdList()
   },
   mounted() {
     window.addEventListener("scroll", this.throttling(this.handleScroll))
@@ -92,6 +94,12 @@ export default {
       if(res.data.data.items.length === 0) this.loading = false
       this.exchanges[type].list.push(...res.data.data.items);
       this.exchanges[type].page += 1;
+    },
+
+    async _getAdList() {
+      const res = await this.$api.exchange.getAd()
+      if (res.data.code !== 0) return;
+      this.adList = res.data.data;
     },
 
     // ------------------------- 事件监听 -------------------------------
@@ -150,6 +158,13 @@ export default {
     },
 
     async handleStarClick(id, star, index) {
+      if(!localStorage.token) {
+        this.$message({
+          type: 'error',
+          message: '您还未登陆，请先登录！'
+        })
+        this.$router.push('login')
+      }
       if (star == false) return this.$message.warning('您已赞过')
       const res = await this.$api.exchange.postStar(id)
       if (res.data.code === 0) {

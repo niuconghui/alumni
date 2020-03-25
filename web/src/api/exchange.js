@@ -56,6 +56,10 @@ export default {
 
   deleteComment(id) {
     return http.delete(`comment/${id}`)
+  },
+
+  getAd() {
+    return http.get(`ad`)
   }
 
 }
