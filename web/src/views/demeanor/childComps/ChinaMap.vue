@@ -40,7 +40,7 @@
           dataRange: {
             show: false,
             min: 0,
-            max: 1000,
+            max: 500,
             text: ['High', 'Low'],
             realtime: true,
             calculable: true,
@@ -82,22 +82,28 @@
               data: this.userJson 
               // data: [{
               //   name: "河南",
-              //   value: 100
+              //   value: 80
               // }, {
               //   name: "上海",
-              //   value: 142
+              //   value: 150
               // }, {
               //   name: "山东",
-              //   value: 1000
+              //   value: 200
               // }, {
-              //   name: "深圳",
-              //   value: 92
+              //   name: "浙江",
+              //   value: 250
               // }, {
               //   name: "湖北",
-              //   value: 810
+              //   value: 350
               // }, {
-              //   name: "四川",
-              //   value: 453
+              //   name: "河北",
+              //   value: 400
+              // }, {
+              //   name: "山西",
+              //   value: 450
+              // }, {
+              //   name: "宁夏",
+              //   value: 500
               // }]
             }
           ]

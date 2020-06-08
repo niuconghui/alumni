@@ -12,7 +12,7 @@ app.set('secret','niuconghui')
 // 数据库
 require('./plugins/db')(app)     
 // 邮箱验证
-require('./plugins/nodemailer')
+// require('./plugins/nodemailer')
 
 // 路由
 require('./routes/admin')(app)

@@ -15,7 +15,7 @@
         </el-form-item>
          <el-form-item prop="email">
           <el-input placeholder="邮箱" v-model="model.email">
-            <el-button slot="append">获取验证码</el-button>
+            <!-- <el-button slot="append">获取验证码</el-button> -->
           </el-input>
         </el-form-item>
         <el-form-item class="item">
@@ -36,10 +36,7 @@
 
 <script>
   export default {
-    name: 'Login',
-    components: {
-      
-    },
+    name: 'Register',
     data() {
       const validateName = async (rule, value, callback) => {
         const res = await this.$api.user.checkUsername(value)
@@ -59,7 +56,6 @@
       }
       const validateEmail = async (rule, value, callback) => {
         const res = await this.$api.user.checkEmail(value)
-        console.log(res)
         if (res.data.code === 0) {
           callback()
         } else {
@@ -105,9 +101,7 @@
               this.$message.success('注册成功，请登录！')
               this.$router.push('/login')
             }
-            
           } else {
-            console.log('error submit!!');
             return false;
           }
         })

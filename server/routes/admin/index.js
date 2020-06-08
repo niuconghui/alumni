@@ -15,14 +15,16 @@ module.exports = app => {
 
   router.get('/', async (req, res) => {
     let items
-    const queryOptions = {}
+    const queryOption = {}
+    const queryOption2 = {}
     const total = await req.model.find().estimatedDocumentCount()
     const page = req.query.page
     if (req.model.modelName === 'Exchange' 
         || req.model.modelName === 'News'
         || req.model.modelName === 'Feedback') {
-      queryOptions.populate = 'category'
-    }
+      queryOption.populate = 'category'
+      queryOption2.populate = 'userId'
+    } 
 
     const limit = req.query.limit
     const queryKey = req.query.queryKey
@@ -40,18 +42,17 @@ module.exports = app => {
               { tag: { $regex: reg } },
             ]
           })
-          .setOptions(queryOptions)
+          .setOptions(queryOption).setOptions(queryOption2)
       } else {
         items = await req.model
           .find()
-          .setOptions(queryOptions)
+          .setOptions(queryOption).setOptions(queryOption2)
           .skip((page - 1) * limit)
           .limit(limit * 1)
       }
     } else {
-      items = await req.model.find().setOptions(queryOptions)
+      items = await req.model.find().setOptions(queryOption).setOptions(queryOption2)
     }
-
     res.send({
       items,
       total,
@@ -105,7 +106,6 @@ module.exports = app => {
     const token = jwt.sign({ id: admin._id, adminName: admin.adminName }, app.get('secret'))
     res.send({ token })
   })
-
 
   // 错误处理函数
   app.use(async (err, req, res, next) => {

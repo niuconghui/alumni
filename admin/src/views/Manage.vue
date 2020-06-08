@@ -24,11 +24,6 @@
               <el-menu-item index="/exchange/list">校园交流列表</el-menu-item>
             </el-menu-item-group>
             <el-menu-item-group>
-              <template slot="title">点赞管理</template>
-              <el-menu-item index="2-1">添加点赞</el-menu-item>
-              <el-menu-item index="2-2">点赞列表</el-menu-item>
-            </el-menu-item-group>
-            <el-menu-item-group>
               <template slot="title">评论管理</template>
               <el-menu-item index="/comment/create">添加评论</el-menu-item>
               <el-menu-item index="/comment/list">评论列表</el-menu-item>
@@ -49,13 +44,6 @@
             </el-menu-item-group>
           </el-submenu>
           <el-submenu index="5">
-            <template slot="title"><i class="el-icon-edit"></i>校友捐赠管理</template>
-            <el-menu-item-group>
-              <el-menu-item index="5-1">添加校友捐赠</el-menu-item>
-              <el-menu-item index="6-2">校友捐赠列表</el-menu-item>
-            </el-menu-item-group>
-          </el-submenu>
-          <el-submenu index="6">
             <template slot="title"><i class="el-icon-user"></i>用户管理</template>
             <el-menu-item-group>
               <template slot="title">源校友</template>
@@ -73,29 +61,29 @@
               <el-menu-item index="/adminUser/list">管理员列表</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
-          <el-submenu index="7">
+          <el-submenu index="6">
             <template slot="title"><i class="el-icon-s-home"></i>院校管理</template>
             <el-menu-item-group>
               <el-menu-item index="/secClass/create">添加二级学院</el-menu-item>
               <el-menu-item index="/secClass/list">二级学院列表</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
-          <el-submenu index="8">
+          <el-submenu index="7">
             <template slot="title"><i class="el-icon-location-information"></i>省市管理</template>
             <el-menu-item-group>
               <el-menu-item index="/cities/create">添加省市</el-menu-item>
               <el-menu-item index="/cities/list">省市列表</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
-          <el-submenu index="9">
+          <el-submenu index="8">
             <template slot="title"><i class="el-icon-chat-dot-square"></i>反馈管理</template>
             <el-menu-item-group>
               <el-menu-item index="/feedback/create">添加反馈</el-menu-item>
               <el-menu-item index="/feedback/list">反馈列表</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
-           <el-submenu index="10">
-            <template slot="title"><i class="el-icon-chat-dot-square"></i>广告管理</template>
+           <el-submenu index="9">
+            <template slot="title"><i class="el-icon-sugar"></i>广告管理</template>
             <el-menu-item-group>
               <el-menu-item index="/ad/create">添加广告</el-menu-item>
               <el-menu-item index="/ad/list">广告列表</el-menu-item>

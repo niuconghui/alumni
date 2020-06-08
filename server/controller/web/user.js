@@ -37,7 +37,9 @@ exports.checkEmail = async(req, res) => {
 }
 
 exports.register = async(req, res) => {
+  console.log(req.model);
   const model = await userModel.create(req.body)
+  
   res.send(result.success(model))
 }
 
@@ -45,12 +47,13 @@ exports.login = async(req, res) => {
   const { studentName, password } = req.body
 
   const user = await userModel.findOne({studentName}).select('+password')
+  console.log('这是req', req.body, req.params);
   if (user === null){
     return res.send(result.error(-1, '用户不存在')) 
   } 
 
   if (encrypt(password) !== user.password) {
-    return res.send(result.error(-1, '账户名或密码错误')) 
+    return res.send(result.error(-1, '用户名或密码错误')) 
   }
 
   const token = jwt.sign({ id: user._id }, 'niuconghui')

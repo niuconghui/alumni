@@ -85,8 +85,6 @@
             </div>
           </el-card>
         </div>
-        
-        <Adcard class="ad-card"/>
       </div>
      
       <feed-button class="feed-back"/>
@@ -116,8 +114,6 @@
   import NavBar from 'components/navbar/NavBar'
   import FeedButton from 'components/feedback/FeedButton'
 
-  import Adcard from './childComps/Adcard'
-
   export default {
     name: 'ExchangeDetail',
     props: { id: {} },
@@ -125,7 +121,6 @@
       NavHeader,
       NavBar,
       FeedButton,
-      Adcard
     },
     created() {
       this._getExchangeDetail()
@@ -147,7 +142,6 @@
         if (res.data.code === 0) {
           this.exchange = res.data.data.items
           this.user = res.data.data.items.userId
-          console.log(this.user._id, this.$store.state.userId)
           if (this.user._id === this.$store.state.userId) {
             this.isShowDeleteCommentBtn = true
           }
@@ -163,6 +157,12 @@
 
       // ---------------------------- 事件监听 --------------------------
       async handleStarClick() {
+        if(!localStorage.token) {
+          this.$message({
+            type: 'error',
+            message: '您还未登陆，请先登录！'
+          })
+        }
         if (this.exchange.canStar == false) return this.$message.warning('您已赞过')
         const res = await this.$api.exchange.postStar(this.id)
         if (res.data.code === 0) {

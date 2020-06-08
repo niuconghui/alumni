@@ -8,6 +8,7 @@
         <div v-if="user.trueName">真实姓名：{{user.trueName}}</div>
         <div v-if="user.gender">性别：{{user.gender}}</div>
         <div v-if="user.studentID">学号：{{user.studentID}}</div>
+        <div v-if="user.email">邮箱：{{user.email}}</div>
         <div v-if="user.phoneID">手机号：{{user.phoneID}}</div>
         <div v-if="isShowDepartment">
           院系班级：<span v-for="item in user.department">{{item}} &nbsp;</span>
@@ -75,7 +76,6 @@
     },
     created() {
       this._getUser()
-      console.log(this.isShowDepartment);
     },
     methods: {
     // -------------------------网络请求-----------------------------------
@@ -111,7 +111,6 @@
       navClick(index, type, path) {
         this.currentIndex = index
         this.currentType = type
-        console.log(this.currentIndex, this.currentType)
         this.$router.push(path)
       }
     },

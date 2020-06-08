@@ -3,7 +3,7 @@
     <el-container>
       <el-container>
         <el-main >
-          <span>欢迎登陆后台管理系统</span>
+          <img src="~assets/img/bg.png" alt="">
         </el-main>
       </el-container>
     </el-container>

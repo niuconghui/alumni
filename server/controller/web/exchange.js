@@ -11,7 +11,7 @@ exports.getExchange = async(req, res) => {
   const page = req.query.page
 
   if (/\d/.test(page) && page > 0) {
-    if (queryKey === '5e43637af8b8801df8dc2d83') {
+    if (queryKey === '5e37b9e560a86c23842f5306') {
       // queryKey === 推荐
       items = await ExchangeModel
         .find()
@@ -19,7 +19,7 @@ exports.getExchange = async(req, res) => {
         .sort("-starNum")
         .limit(10)
         .skip( (page - 1) * 10 )
-    } else if (queryKey === '5e436360f8b8801df8dc2d82') {
+    } else if (queryKey === '5e37b9d260a86c23842f5305') {
       // queryKey === 全部
       items = await ExchangeModel
         .find()
@@ -65,15 +65,20 @@ exports.getExchange = async(req, res) => {
 
 exports.getExchangeDetail = async(req, res) => {
   const userInfo = await util.parseUserByToken(req.headers.authorization)
-
+  console.log(userInfo);
   let canStar
 
   const item = await ExchangeModel
     .findById(req.params.id)
     .populate('userId')
 
-  if (item.starNum.includes(userInfo.id)) {
-    canStar = false
+    
+  if (userInfo) {
+    if (item.starNum.includes(userInfo.id)) {
+      canStar = false
+    } else {
+      canStar = true
+    }
   } else {
     canStar = true
   }
@@ -127,7 +132,8 @@ exports.deleteExchange = async(req, res) => {
 
 exports.getUserExchanges = async(req, res) => {
   const userInfo = await util.parseUserByToken(req.headers.authorization)
-
+  console.log('111111111'); 
+  console.log(req.params.id); 
   const id = req.params.id
   const items = await ExchangeModel
     .find({userId: id})

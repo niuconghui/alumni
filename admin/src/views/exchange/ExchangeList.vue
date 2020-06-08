@@ -19,23 +19,25 @@
           type="index"
           width="50">
         </el-table-column>
-        <el-table-column prop="_id" label="ID" width="180">
+        <el-table-column prop="_id" label="ID" width="220">
         </el-table-column>
-        <el-table-column prop="userId" label="用户id" width="180" >
+        <el-table-column prop="userId._id" label="用户id" width="220" >
+        </el-table-column>
+        <el-table-column prop="userId.studentName" label="用户名" width="120" >
         </el-table-column>
         <el-table-column prop="category.title" label="类型" >
         </el-table-column>
         <el-table-column prop="title" label="标题" >
         </el-table-column>
-         <el-table-column prop="starNum" label="点赞数" >
+         <el-table-column prop="starNum.length" label="点赞数" >
         </el-table-column>
          <el-table-column prop="commentNum" label="评论数" >
         </el-table-column>
-        <el-table-column prop="created_time" label="发表时间" >
+        <el-table-column prop="created_time" label="发表时间" width="180">
         </el-table-column>
-        <el-table-column prop="last_modified_time" label="最后修改时间" >
+        <el-table-column prop="last_modified_time" label="最后修改时间" width="180" >
         </el-table-column>
-        <el-table-column label="操作"  width="120">
+        <el-table-column label="操作"  width="120" fixed="right">
           <template slot-scope="scope">
             <el-button @click="edit(scope.row)" type="text" size="small">编辑</el-button>
             <el-button @click="deleted(scope.row)" type="text" size="small">删除</el-button>
@@ -48,7 +50,7 @@
         @current-change="handleCurrentChange"
         :current-page="currentPage"
         layout="total, sizes, prev, pager, next "
-        :page-sizes="[1, 4]"
+        :page-sizes="[1, 4, 6, 8]"
         :page-size=pageLimit
         :total=total
         hide-on-single-page>
@@ -66,7 +68,6 @@
         currentPage: 1,
         pageLimit: 4,
         queryKey: ''
-        
       }
     },
     created() {
@@ -91,6 +92,7 @@
         })
         this.items = res.data.items
         this.total = res.data.total
+        console.log(this.items);
       },
       edit (row) {
         this.$router.push(`/exchange/edit/${row._id}`)

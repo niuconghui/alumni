@@ -2,7 +2,16 @@
   <div class="demeanor">
     <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
       <el-tab-pane label="省市分布" name="first">
-        <china-map  v-if="province.length" :userJson="province"/>
+        <div v-if="province.length">
+          <china-map :userJson="province"/>
+        </div>
+        <div v-else
+            class="load text-c"
+            v-loading="loading" 
+            element-loading-text="拼命加载中..."
+            element-loading-spinner="el-icon-loading"
+            >
+        </div>
       </el-tab-pane>
       <el-tab-pane label="精准检索" name="second">
         <el-row class="el-row-head">
@@ -68,7 +77,10 @@
               class="d-flex" 
               v-for="item in targetUsers"
               :key="item._id">
-              <img src="~assets/img/avatar.png" alt="">
+              <div class="avatar">
+                <img :src="item.avatar" alt="" v-if="item.avatar">
+                <img src="~assets/img/avatar.png" alt="" v-else>
+              </div>
               <div>
                 <span>{{item.studentName}}({{item.studentID}})</span>
                 <el-button 
@@ -120,6 +132,7 @@
         cities: [],
         targetUsers: [],
         province: [],
+        loading: true,
         model: {
           keyword: '',
           address: [],
@@ -194,6 +207,7 @@
 
       async _getProvince() {
         const res = await this.$api.demeanor.getProvince()
+        console.log(res);
         if (res.data.code === 0) {
           const provinceDate = res.data.data
           this.province = Object.entries(provinceDate)
@@ -278,6 +292,11 @@
 <style lang="scss" scoped>
   .demeanor {
     background-color: $bgc;
+
+    .load {
+      height: 400px;
+    }
+
     .search {
       padding: 10px;
       background-color: $white;
@@ -291,23 +310,27 @@
         li {
           margin: 10px 10px 0 0;
           padding: 10px;
-          width: 23%;
+          width: 25%;
           height: 5vw;
           background-color: $white;
           list-style: none;
-          img {
-            margin-top: 0.2vw;
-            padding: 0 0.4vw 1vw 0 ;
-            width: 4.5vw;
-            height: 4.5vw;
-          }
 
           span {
+            // width: 100%;
             display: inline-block;
             margin-bottom: 0.5vw;
           }
         }
         
+        .avatar {
+          img {
+            margin-top: 0.2vw;
+            padding: 0 0.4vw 0 0 ;
+            width: 4.5vw;
+            height: 4vw;
+            border-radius: 50%;
+          }
+        }
       }
     }
   }

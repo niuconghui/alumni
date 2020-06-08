@@ -54,16 +54,17 @@ export default {
       currentIndex: 0,
       adList: [],
       exchanges: {
-        "5e436360f8b8801df8dc2d82": { page: 1, list: [] },
-        "5e43637af8b8801df8dc2d83": { page: 1, list: [] },
-        "5e436396f8b8801df8dc2d84": { page: 1, list: [] },
-        "5e4363aaf8b8801df8dc2d85": { page: 1, list: [] },
-        "5e4363c3f8b8801df8dc2d86": { page: 1, list: [] },
-        "5e4363dff8b8801df8dc2d87": { page: 1, list: [] },
-        "5e4363ebf8b8801df8dc2d88": { page: 1, list: [] }
+        "5e37b9d260a86c23842f5305": { page: 1, list: [] },
+        "5e37b9e560a86c23842f5306": { page: 1, list: [] },
+        "5e37ba6960a86c23842f5308": { page: 1, list: [] },
+        "5e37ba7760a86c23842f5309": { page: 1, list: [] },
+        "5e37ba8660a86c23842f530a": { page: 1, list: [] },
+        "5e37ba9160a86c23842f530b": { page: 1, list: [] },
+        "5e37baae60a86c23842f530c": { page: 1, list: [] },
+        "5e37baba60a86c23842f530d": { page: 1, list: [] }
       },
       page: 1,
-      currentType: "5e436360f8b8801df8dc2d82",
+      currentType: "5e37b9d260a86c23842f5305",
       loading: true,
       timerid: null,
       mark: true
@@ -77,6 +78,7 @@ export default {
     this._getCategory();
     this._getExchange(this.currentType)
     this._getAdList()
+    console.log(this.adList);
   },
   mounted() {
     window.addEventListener("scroll", this.throttling(this.handleScroll))
@@ -107,7 +109,7 @@ export default {
       this.currentIndex = index
       this.currentType = id
       if (index < 1) {
-        this.currentType = "5e436360f8b8801df8dc2d82"
+        this.currentType = "5e37b9d260a86c23842f5305"
         this._getExchange(this.currentType)
       } else {
         this._getExchange(this.currentType)
@@ -176,6 +178,13 @@ export default {
     },
 
     handleCommentClick(id) {
+      if(!localStorage.token) {
+        this.$message({
+          type: 'error',
+          message: '您还未登陆，请先登录！'
+        })
+        this.$router.push('login')
+      }
       let routeData = this.$router.resolve({
         path: `/exchange/detail/${id}`
       })

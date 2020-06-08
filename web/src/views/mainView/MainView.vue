@@ -4,12 +4,15 @@
       <nav-header />
       <nav-bar />
     </div>
+
     <div class="main">
       <router-view />
     </div>
+
     <div id="footer">
       <Footer />
     </div>
+    
     <feed-button class="feed-back"/>
     <el-backtop target="" class="back-top"></el-backtop>
   </div>

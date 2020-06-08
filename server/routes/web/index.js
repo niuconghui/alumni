@@ -16,12 +16,6 @@ module.exports = app => {
 
   const imgUploadController = require('../../controller/web/imgUpload')
 
-  const socketController = require('../../controller/web/socket')
-
-  router.get('/socketUrl', (req, res) => {
-    res.send(console.log(socketController.createChatroom))
-  })
-  
   // ----------------------- 用户中心 ------------------------------
   router.get('/user/susers', userController.getSUsers)
 

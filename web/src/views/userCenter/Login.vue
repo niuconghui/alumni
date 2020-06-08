@@ -32,9 +32,6 @@
 
   export default {
     name: 'Login',
-    components: {
-      
-    },
     data() {
       return {
         model: {},
@@ -62,7 +59,6 @@
             this.setLogin(true)
             this.setUserId(res.data.data.userId)
             this.setAvatar(res.data.data.uavatar)
-            console.log(res.data.data);
             this.setUsername(res.data.data.uname)
 
             this.$message({ type: 'success', message: '登录成功' })

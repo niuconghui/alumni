@@ -23,14 +23,6 @@
         </el-table-column>
         <el-table-column  prop="sec_name" label="二级学院名称" >
         </el-table-column>
-        <el-table-column label="专业名称" >
-          <template>
-            <span style="margin-left: 10px" v-for="(item, index) in items" :key="index">
-              <!-- {{ item.major }} -->
-              <!-- <span v-for="(cla, index) in item" :key="index">{{ cla }}</span> -->
-            </span>
-          </template>
-        </el-table-column>
         <el-table-column label="操作" >
           <template slot-scope="scope">
             <el-button @click="edit(scope.row)" type="text" size="small">编辑</el-button>
@@ -88,17 +80,6 @@ export default {
       })
       this.items = res.data.items
       this.total = res.data.total
-      this.items.forEach(item => {
-        console.log(item)
-        //item.major.forEach(major => {
-          // console.log(major)
-          // this.major.push(major)
-          // this.major_names./push(major.major_name)
-          // console.log(this.major_names)
-        //})
-        // console.log(this.major_names)
-      });
-      // console.log(this.sec_items)
     },
     edit (row) {
       this.$router.push(`/secClass/edit/${row._id}`)

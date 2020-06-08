@@ -20,9 +20,9 @@
         </el-table-column>
         <el-table-column prop="_id" label="ID" width="180">
         </el-table-column>
-        <el-table-column prop="userId" label="评论用户" width="180" >
+        <el-table-column prop="user" label="评论用户" width="180" >
         </el-table-column>
-        <el-table-column prop="exchangeId" label="评论交流" >
+        <el-table-column prop="exchange" label="评论交流" >
         </el-table-column>
         <el-table-column prop="content" label="评论内容" >
         </el-table-column>
@@ -83,12 +83,13 @@
         })
         this.items = res.data.items
         this.total = res.data.total
+        console.log(res);
       },
       edit (row) {
         this.$router.push(`/comment/edit/${row._id}`)
       },
       deleted (row) {
-        this.$confirm(`此操作将删除分类《${row.title}》!`, '提示', {
+        this.$confirm(`此操作将删除评论《${row.content}》!`, '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             type: 'warning'

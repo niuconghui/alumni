@@ -3,6 +3,12 @@
     <el-card class="back-card" shadow="never" >
       <el-form label-width="100px" :model="model" :rules="rules" ref="feedbackForm">
         <h3>反馈意见</h3>
+        <p>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          hello，感谢您来到这里，
+          您在此网站遇到任何问题都可以在这里反馈，
+          我们会尽快帮您解决。紧急问题请直接添加开发者微信：Ncherish_ 注明来路。
+        </p>
         <el-form-item label="反馈类型：" prop="category">
           <el-select v-model="model.category" placeholder="请选择">
             <el-option
@@ -100,7 +106,7 @@
 
 <style scoped>
   p {
-    font-size: 20px;
+    font-size: 16px;
   }
 
   .back-card {

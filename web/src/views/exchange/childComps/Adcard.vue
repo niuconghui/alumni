@@ -3,10 +3,10 @@
     <div class="close-icon" >
       <i class="el-icon-close" @click="closeClick"></i>
     </div>
-    <div class="content">
-      <img :src="ad.coverSrc" alt="">
+    <div class="content" >
+      <img :src="ad.coverSrc" alt="" v-if="ad.coverSrc">
     </div>
-    <div class="text">
+    <div class="text" v-if="ad.description">
       {{ad.description}}
     </div>
   </div>
@@ -22,6 +22,9 @@
       return {
         isShow: true
       }
+    },
+    created() {
+      console.log(this.ad);
     },
     methods: {
       closeClick() {
